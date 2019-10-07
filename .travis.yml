@@ -15,7 +15,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 before_install:
-  - mysql -e 'CREATE DATABASE e_commerce_test;'
+  - mysql -e 'CREATE DATABASE ecommerce_test;'
 install:
   - npm install
 script:

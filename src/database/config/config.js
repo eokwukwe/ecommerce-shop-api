@@ -8,6 +8,9 @@ module.exports = {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     logging: false,
+    dialectOptions: {
+      multipleStatements: true,
+    },
   },
   test: {
     username: process.env.TEST_DB_USER,
@@ -16,6 +19,9 @@ module.exports = {
     host: process.env.TEST_DB_HOST,
     dialect: 'mysql',
     logging: false,
+    dialectOptions: {
+      multipleStatements: true,
+    },
   },
   production: {
     username: process.env.DB_USER,
