@@ -1,11 +1,4 @@
-# Turing Back End Challenge
-To complete this challenge, you need to ensure all route returns a similar response object as described in our API guide.
-To achieve this goal
-- You will have to fix the existing bugs
-- Implement the incomplete functions,
-- Add test cases for the main functions of the system.
-- Add Dockerfile to the root of the project to run the app in docker environment
-
+# eCommerce-shop-api
 
 ## Getting started
 
@@ -37,14 +30,4 @@ mysql -u <dbuser> -D <databasename> -p < ./src/database/database.sql
 
 * Run `npm run dev` to start the app in development
 
-## Docker
-
-* Build image
-
-`docker build -t node_challenge .`
-
-* Run container
-`docker run --rm -p 8000:80 node_challenge`
-
-## Request and Response Object API guide for all Endpoints
-Check [here](https://docs.google.com/document/d/1J12z1vPo8S5VEmcHGNejjJBOcqmPrr6RSQNdL58qJyE/edit?usp=sharing)
+* Run `npm test` to test the app in development
