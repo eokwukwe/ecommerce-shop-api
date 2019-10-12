@@ -7,7 +7,7 @@
     "dev": "nodemon --watch src --exec babel-node ./src/index.js",
     "pre-test-dev": "cross-env NODE_ENV=test babel-node ./src/test/migrate.js",
     "pretest": "babel-node ./src/test/migrate.js",
-    "test": "cross-env NODE_ENV=test jest --no-cache  --detectOpenHandles --runInBand --coverage --forceExit",
+    "test": "jest --no-cache  --detectOpenHandles --runInBand --coverage --forceExit",
     "build": "cross-env NODE_ENV=production babel src -d dist --copy-files",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "test:watch": "npm run pre-test-dev && jest --no-cache  --detectOpenHandles --runInBand --watchAll --coverage"
