@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
+import Authentication from '../../middlewares/authentication'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Customer = sequelize.define(
     'Customer',
     {
@@ -61,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Customer.prototype.generatePasswordHash = async function generatePasswordHash() {
-    const saltRounds = 8;
+    const saltRounds = 10;
     return bcrypt.hash(this.password, saltRounds);
   };
 
@@ -73,6 +74,10 @@ module.exports = (sequelize, DataTypes) => {
     const { password, ...data } = this.dataValues;
     return data;
   };
+
+  Customer.prototype.generateToken = function generateToken() {
+    return Authentication.generateToken(this.customer_id)
+  }
 
   Customer.associate = ({ Order }) => {
     // associations can be defined here

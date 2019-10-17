@@ -1,22 +1,23 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable prefer-template */
-/* eslint-disable no-path-concat */
-/* eslint-disable dot-notation */
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
+import { dbConfig } from '../../config/config';
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+const config = dbConfig[env];
 const db = {};
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+
+sequelize = config.use_env_variable
+  ? new Sequelize(process.env[config.use_env_variable], config)
+  : new Sequelize(config.database, config.username, config.password, config);
+// if (config.use_env_variable) {
+//   export const sequelize = new Sequelize(process.env[config.use_env_variable], config);
+// } else {
+//   export const sequelize = new Sequelize(config.database, config.username, config.password, config);
+// }
 
 fs.readdirSync(__dirname)
   .filter(file => {
@@ -36,4 +37,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

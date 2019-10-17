@@ -1,4 +1,5 @@
-import models, { sequelize } from '../database/models';
+import  db from '../database/models';
+import models from '../database/models';
 
 function truncateTable(modelName) {
   return models[modelName].destroy({
@@ -14,7 +15,7 @@ function truncateTable(modelName) {
 // eslint-disable-next-line import/prefer-default-export
 export async function createTables() {
   try {
-    return await sequelize.sync({ force: true, logging: true });
+    return await db.sequelize.sync({ force: true, logging: true });
   } catch (error) {
     console.log('error', error);
   } // DROP TABLE IF EXISTS, then CREATE TABLES
