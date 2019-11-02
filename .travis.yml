@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 'stable'
+  - '12'
 cache:
   directories:
     - node_modules
@@ -9,7 +9,7 @@ services:
   - redis-server
 env:
   global:
-    - CC_TEST_REPORTER_ID=CC_TEST_REPORTER_ID
+    - CC_TEST_REPORTER_ID=6f27ef5d6de82b5f7d030bee632fc1579f3604a66c01fc142e0bc0a55ec7bb10
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter

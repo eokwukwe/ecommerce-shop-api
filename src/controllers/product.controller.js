@@ -17,15 +17,10 @@
  *  NB: Check the BACKEND CHALLENGE TEMPLATE DOCUMENTATION in the readme of this repository to see our recommended
  *  endpoints, request body/param, and response object for each of these method
  */
-import {
-  Product,
-  Department,
-  AttributeValue,
-  Attribute,
-  Category,
-  Sequelize,
-} from '../database/models';
 
+import models from '../database/models';
+
+const { Product, Department, AttributeValue, Attribute, Category, Sequelize } = models;
 const { Op } = Sequelize;
 
 /**

@@ -1,17 +1,6 @@
-/**
- * Customer controller handles all requests that has to do with customer
- * Some methods needs to be implemented from scratch while others may contain one or two bugs
- * 
- * - create - allow customers to create a new account
- * - login - allow customers to login to their account
- * - getCustomerProfile - allow customers to view their profile info
- * - updateCustomerProfile - allow customers to update their profile info like name, email, password, day_phone, eve_phone and mob_phone
- * - updateCustomerAddress - allow customers to update their address info
- * - updateCreditCard - allow customers to update their credit card number
- * 
- *  NB: Check the BACKEND CHALLENGE TEMPLATE DOCUMENTATION in the readme of this repository to see our recommended
- *  endpoints, request body/param, and response object for each of these method
- */
+import http from '../helpers/http';
+
+import CustomerService from '../services/customer';
 import { Customer } from '../database/models';
 
 /**
@@ -19,7 +8,7 @@ import { Customer } from '../database/models';
  *
  * @class CustomerController
  */
-class CustomerController {
+export default class CustomerController {
   /**
    * create a customer record
    *
@@ -31,8 +20,13 @@ class CustomerController {
    * @memberof CustomerController
    */
   static async create(req, res, next) {
-    // Implement the function to create the customer account
-    return res.status(201).json({ message: 'this works' });
+    const { name, email, password } = req.body;
+    try {
+      const customerData = await CustomerService.createCustomer({ name, email, password });
+      return http.httpSingleRecordResponse(req, res, customerData);
+    } catch (error) {
+      return next(error);
+    }
   }
 
   /**
@@ -62,7 +56,7 @@ class CustomerController {
    */
   static async getCustomerProfile(req, res, next) {
     // fix the bugs in this code
-    const { customer_id } = req;  // eslint-disable-line
+    const { customer_id } = req; // eslint-disable-line
     try {
       const customer = await Customer.findByPk(customer_id);
       return res.status(400).json({
@@ -119,5 +113,3 @@ class CustomerController {
     return res.status(200).json({ message: 'this works' });
   }
 }
-
-export default CustomerController;

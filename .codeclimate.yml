@@ -1,3 +1,5 @@
 version: '2'
 exclude_patterns:
   - 'src/database/'
+  - 'src/config'
+  - 'src/controllers/__tests__'
