@@ -19,13 +19,7 @@ export default class CustomerService extends BaseService {
       customer_id: newCustomer.customer_id,
     });
 
-    return {
-      customer: {
-        schema: customerData.getSafeDataValues(),
-      },
-      accessToken: `Bearer ${newCustomer.generateToken()}`,
-      expires_in: '24h',
-    };
+    return CustomerService.getSafeDataValues(customerData);
   }
 
   /**
@@ -38,5 +32,21 @@ export default class CustomerService extends BaseService {
   static async getCustomer(option) {
     const customer = await this.findOne(Customer, option);
     return customer;
+  }
+
+  /**
+   * @description This service formats customer object to be returned to the client
+   * @param  {object} customerData
+   * @returns  {object} formatted customer object
+   * @member CustomerService
+   */
+  static getSafeDataValues(customerData) {
+    return {
+      customer: {
+        schema: customerData.getSafeDataValues(),
+      },
+      accessToken: `Bearer ${customerData.generateToken()}`,
+      expires_in: '24h',
+    };
   }
 }

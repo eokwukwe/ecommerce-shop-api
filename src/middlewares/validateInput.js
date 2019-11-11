@@ -1,5 +1,5 @@
 import { validator } from '../validations/validator';
-import { signUpSchema } from '../validations/schemas/schemas';
+import { signUpSchema, facebookAccessTokenSchema } from '../validations/schemas/schemas';
 
 /**
  * @description Get the schema definition for a route
@@ -10,6 +10,7 @@ import { signUpSchema } from '../validations/schemas/schemas';
 const getSchema = req => {
   const schema = {
     '/customers': signUpSchema,
+    '/facebook': facebookAccessTokenSchema
   };
   const path = req.originalUrl.split('/').pop();
   return schema[`/${path}`];

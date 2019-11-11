@@ -1,7 +1,9 @@
-import http from '../helpers/http';
+import isEmpty from 'lodash.isempty';
 
+import http from '../helpers/http';
 import CustomerService from '../services/customer';
 import { Customer } from '../database/models';
+import verifyFacebookToken from '../helpers/verifyFacebookToken';
 
 /**
  *
@@ -22,8 +24,8 @@ export default class CustomerController {
   static async create(req, res, next) {
     const { name, email, password } = req.body;
     try {
-      const customerData = await CustomerService.createCustomer({ name, email, password });
-      return http.httpSingleRecordResponse(req, res, customerData);
+      const newCustomer = await CustomerService.createCustomer({ name, email, password });
+      return http.httpSingleRecordResponse(req, res, newCustomer);
     } catch (error) {
       return next(error);
     }
@@ -42,6 +44,38 @@ export default class CustomerController {
   static async login(req, res, next) {
     // implement function to login to user account
     return res.status(200).json({ message: 'this works' });
+  }
+
+  /**
+   * Login/signup a customer using Facebook
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} json object with status, and access token
+   * @memberof CustomerController
+   */
+  static async facebookLogin(req, res, next) {
+    const { access_token } = req.body;
+    try {
+      const {
+        data: { email, name },
+      } = await verifyFacebookToken(access_token);
+      const registeredCustomer = CustomerService.getCustomer({ email });
+      if (isEmpty(registeredCustomer)) {
+        const newCustomer = await CustomerService.createCustomer({
+          name,
+          email,
+          password: 'password',
+        });
+        return http.httpSingleRecordResponse(req, res, newCustomer);
+      }
+      const customerSafeData = CustomerService.getSafeDataValues(registeredCustomer);
+      return http.httpSingleRecordResponse(req, res, customerSafeData);
+    } catch (error) {
+      return next(error);
+    }
   }
 
   /**
