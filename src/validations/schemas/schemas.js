@@ -18,8 +18,17 @@ const password = Joi.string()
   .trim()
   .label('Password');
 
+const access_token = Joi.string()
+  .required()
+  .trim()
+  .label('access_token');
+
 export const signUpSchema = Joi.object().keys({
   name,
   email,
   password,
+});
+
+export const facebookAccessTokenSchema = Joi.object().keys({
+  access_token,
 });

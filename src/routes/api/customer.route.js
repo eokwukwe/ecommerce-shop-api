@@ -6,6 +6,8 @@ import validateInput from '../../middlewares/validateInput';
 const router = Router();
 router.post('/customers', validateInput, checkUniqueEmail, CustomerController.create);
 
+router.post('/customers/facebook', validateInput, CustomerController.facebookLogin);
+
 router.post('/customers', CustomerController.updateCreditCard);
 router.post('/customers/login', CustomerController.login);
 router.get('/customer', CustomerController.getCustomerProfile);
