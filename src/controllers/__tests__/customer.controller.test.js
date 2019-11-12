@@ -25,7 +25,7 @@ describe('customer controller', () => {
       const response = await request(app)
         .post(baseUrl)
         .send({ name: 'test', email: 'test@test.com', password: 'password' });
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     });
     it('should return 400 error if a user registers with an email that already exists in the customer table', async () => {
       const response = await request(app)
@@ -34,6 +34,18 @@ describe('customer controller', () => {
       expect(response.statusCode).toBe(400);
       expect(response.body.error.message).toBe('The email already exists.');
     });
+    it('should return 400 error if user login with invalid credentials', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/login`)
+        .send({ email: 'test.com', password: 'password' });
+      expect(response.statusCode).toBe(400);
+    });
+    it('should login a user with valid credentials', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/login`)
+        .send({ email: 'test@test.com', password: 'password' });
+      expect(response.statusCode).toBe(200);
+    });
     it('should return a status of 400 for a facebook login without access code', async () => {
       mock
         .onGet('https://graph.facebook.com/me?fields=name,email&access_token=ecommerce')
@@ -41,8 +53,7 @@ describe('customer controller', () => {
           email: 'test@test1.com',
           name: 'John doe',
         });
-      const response = await request(app)
-        .post(`${baseUrl}/facebook`);
+      const response = await request(app).post(`${baseUrl}/facebook`);
       expect(response.statusCode).toBe(400);
     });
     it('should return a status of 200 for a successful facebook login', async () => {

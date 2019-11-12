@@ -40,7 +40,7 @@ export const validator = async (inputData, schema) => {
  */
 const errorFormatter = (message, errorCode, field) => ({
   message,
-  errorCode,
+  code: errorCode,
   field,
   status: 400,
 });

@@ -15,11 +15,11 @@ export default {
    * @param {boolean} isCache Indicates if the record will be cached
    * @return {object} server reponse
    */
-  httpSingleRecordResponse(req, res, data, isCache = false) {
+  httpSingleRecordResponse(req, res, data, statusCode, isCache = false) {
     if (isCache) {
       createCache(req.originalUrl, { ...data });
     }
-    return res.status(200).json({ ...data });
+    return res.status(statusCode || 200).json({ ...data });
   },
 
   /**
@@ -47,7 +47,7 @@ export default {
    * @param {number} statusCode
    * @return {object} server reponse
    */
-  validationErrorResponse(res, options, statusCode) {
+  httpErrorResponse(res, options, statusCode) {
     const error = {
       status: statusCode,
       code: options.errorCode,

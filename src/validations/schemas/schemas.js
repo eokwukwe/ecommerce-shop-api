@@ -29,6 +29,11 @@ export const signUpSchema = Joi.object().keys({
   password,
 });
 
+export const loginSchema = Joi.object().keys({
+  email,
+  password
+})
+
 export const facebookAccessTokenSchema = Joi.object().keys({
   access_token,
 });
