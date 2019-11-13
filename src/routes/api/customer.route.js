@@ -8,8 +8,9 @@ router.post('/customers', validateInput, checkUniqueEmail, CustomerController.cr
 
 router.post('/customers/facebook', validateInput, CustomerController.facebookLogin);
 
+router.post('/customers/login', validateInput, CustomerController.login);
+
 router.post('/customers', CustomerController.updateCreditCard);
-router.post('/customers/login', CustomerController.login);
 router.get('/customer', CustomerController.getCustomerProfile);
 router.put('/customer', CustomerController.apply);
 router.put('/customer/address', CustomerController.updateCustomerAddress);

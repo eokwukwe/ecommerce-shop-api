@@ -24,7 +24,7 @@ export default async (req, res, next) => {
       message: 'The email already exists.',
       field: 'email',
     };
-    return http.validationErrorResponse(res, options, 400);
+    return http.httpErrorResponse(res, options, 400);
   }
   return next();
 };

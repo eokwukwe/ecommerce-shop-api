@@ -18,14 +18,18 @@ export default class CustomerController {
    * @param {object} req express request object
    * @param {object} res express response object
    * @param {object} next next middleware
-   * @returns {json} json object with status, customer data and access token
+   * @returns {json} JSON Object of Customer with auth credencials
    * @memberof CustomerController
    */
   static async create(req, res, next) {
     const { name, email, password } = req.body;
     try {
-      const newCustomer = await CustomerService.createCustomer({ name, email, password });
-      return http.httpSingleRecordResponse(req, res, newCustomer);
+      const newCustomer = await CustomerService.createCustomer({
+        name,
+        email,
+        password,
+      });
+      return http.httpSingleRecordResponse(req, res, newCustomer, 201);
     } catch (error) {
       return next(error);
     }
@@ -38,12 +42,30 @@ export default class CustomerController {
    * @param {object} req express request object
    * @param {object} res express response object
    * @param {object} next next middleware
-   * @returns {json} json object with status, and access token
+   * @returns {json} JSON Object of Customer with auth credencials
    * @memberof CustomerController
    */
   static async login(req, res, next) {
-    // implement function to login to user account
-    return res.status(200).json({ message: 'this works' });
+    const { email, password } = req.body;
+    try {
+      const customer = await CustomerService.getCustomer({ email });
+      const options = {
+        errorCode: 'USR_01',
+        field: 'email/password',
+        message: 'Email or Password is invalid.',
+      };
+      if (!isEmpty(customer)) {
+        const validatePassword = await customer.validatePassword(password);
+        if (validatePassword) {
+          const customerSafeData = CustomerService.getSafeDataValues(customer);
+          return http.httpSingleRecordResponse(req, res, customerSafeData);
+        }
+        return http.httpErrorResponse(res, options, 400);
+      }
+      return http.httpErrorResponse(res, options, 400);
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**
@@ -53,7 +75,7 @@ export default class CustomerController {
    * @param {object} req express request object
    * @param {object} res express response object
    * @param {object} next next middleware
-   * @returns {json} json object with status, and access token
+   * @returns {json} JSON Object of Customer with auth credencials
    * @memberof CustomerController
    */
   static async facebookLogin(req, res, next) {
