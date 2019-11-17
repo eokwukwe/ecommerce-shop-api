@@ -1,5 +1,10 @@
 import { validator } from '../validations/validator';
-import { signUpSchema, loginSchema, facebookAccessTokenSchema } from '../validations/schemas/schemas';
+import {
+	signUpSchema,
+	loginSchema,
+	facebookAccessTokenSchema,
+	updateAddressSchema,
+} from '../validations/schemas/schemas';
 
 /**
  * @description Get the schema definition for a route
@@ -8,13 +13,14 @@ import { signUpSchema, loginSchema, facebookAccessTokenSchema } from '../validat
  * @returns {Joi.object} a Joi object
  */
 const getSchema = req => {
-  const schema = {
-    '/customers': signUpSchema,
-    '/login': loginSchema,
-    '/facebook': facebookAccessTokenSchema
-  };
-  const path = req.originalUrl.split('/').pop();
-  return schema[`/${path}`];
+	const schema = {
+		'/customers': signUpSchema,
+		'/login': loginSchema,
+		'/facebook': facebookAccessTokenSchema,
+		'/address': updateAddressSchema,
+	};
+	const path = req.originalUrl.split('/').pop();
+	return schema[`/${path}`];
 };
 
 /**
@@ -26,12 +32,12 @@ const getSchema = req => {
  * @returns {funcion} next
  */
 export default async (req, res, next) => {
-  const validation = await validator(req.body, getSchema(req));
-  if (validation.hasError) {
-    return res.status(400).json({
-      errors: validation.errors,
-    });
-  }
-  req.body = validation.fields;
-  return next();
+	const validation = await validator(req.body, getSchema(req));
+	if (validation.hasError) {
+		return res.status(400).json({
+			errors: validation.errors,
+		});
+	}
+	req.body = validation.fields;
+	return next();
 };
