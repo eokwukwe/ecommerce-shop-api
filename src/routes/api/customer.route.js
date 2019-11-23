@@ -18,14 +18,20 @@ router.post('/customers/login', validateInput, CustomerController.login);
 // router.put('/customer', CustomerController.apply);
 
 router.put(
-	'/customers/address',
-	Authentication.verifyToken,
-	findCustomer,
-	validateInput,
-	findShippingRegion,
-	CustomerController.updateCustomerAddress
+  '/customers/address',
+  Authentication.verifyToken,
+  findCustomer,
+  validateInput,
+  findShippingRegion,
+  CustomerController.updateCustomerAddress
 );
 
-// router.put('/customer/creditCard', CustomerController.updateCreditCard);
+router.put(
+  '/customers/profile',
+  Authentication.verifyToken,
+  findCustomer,
+  validateInput,
+  CustomerController.updateCustomerProfile
+);
 
 export default router;

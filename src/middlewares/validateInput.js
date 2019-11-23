@@ -4,6 +4,7 @@ import {
 	loginSchema,
 	facebookAccessTokenSchema,
 	updateAddressSchema,
+	updateProfileSchema
 } from '../validations/schemas/schemas';
 
 /**
@@ -18,6 +19,7 @@ const getSchema = req => {
 		'/login': loginSchema,
 		'/facebook': facebookAccessTokenSchema,
 		'/address': updateAddressSchema,
+		'/profile': updateProfileSchema
 	};
 	const path = req.originalUrl.split('/').pop();
 	return schema[`/${path}`];

@@ -92,6 +92,34 @@ describe('customer controller', () => {
         .send(addressUpdate);
       expect(response.statusCode).toBe(200);
     });
+    it('should return a status of 400 if user omits a required field', async () => {
+      const profile = {
+        name: '',
+        email: 'john@doe.com',
+        day_phone: '+351323213511235',
+        eve_phone: '+452436143246123',
+        mob_phone: '+351323213511235',
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/profile`)
+        .set({ USER_KEY: token })
+        .send(profile);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return a status of 200 for a successful profile update', async () => {
+      const profile = {
+        name: 'john doe',
+        email: 'john@doe.com',
+        day_phone: '+351323213511235',
+        eve_phone: '+452436143246123',
+        mob_phone: '+351323213511235',
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/profile`)
+        .set({ USER_KEY: token })
+        .send(profile);
+      expect(response.statusCode).toBe(200);
+    });
     it('should return a status of 400 for a facebook login without access code', async () => {
       mock
         .onGet('https://graph.facebook.com/me?fields=name,email&access_token=ecommerce')

@@ -56,21 +56,4 @@ export default {
     };
     return res.status(statusCode).json({ error });
   },
-
-  /**
-   * @description This method returns server error respone
-   *
-   * @param {object} res HTTP respone object
-   * @param {object} option The info about the error (code, field, message )
-   * @param {boolean} isCache Indicates if the record will be cached
-   * @return {object} server reponse
-   */
-  httpServerError(res) {
-    return res.status(500).json({
-      error: {
-        status: 500,
-        message: 'Server unavailable',
-      },
-    });
-  },
 };

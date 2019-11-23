@@ -63,6 +63,24 @@ const access_token = Joi.string()
 	.trim()
 	.label('access_token');
 
+const day_phone = Joi.string()
+  .allow('')
+  .trim()
+  .strict()
+	.label('day_phone');
+
+const eve_phone = Joi.string()
+  .allow('')
+  .trim()
+  .strict()
+	.label('eve_phone');
+
+const mob_phone = Joi.string()
+  .allow('')
+  .trim()
+  .strict()
+  .label('mob_phone');
+
 export const signUpSchema = Joi.object().keys({
 	name,
 	email,
@@ -87,3 +105,11 @@ export const updateAddressSchema = Joi.object().keys({
 	country,
 	shipping_region_id,
 });
+
+export const updateProfileSchema = Joi.object().keys({
+	name,
+	email,
+	day_phone,
+	eve_phone,
+	mob_phone
+})
