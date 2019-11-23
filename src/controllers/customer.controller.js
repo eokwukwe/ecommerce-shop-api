@@ -2,7 +2,6 @@ import isEmpty from 'lodash.isempty';
 
 import http from '../helpers/http';
 import CustomerService from '../services/customer';
-import { Customer } from '../database/models';
 import verifyFacebookToken from '../helpers/verifyFacebookToken';
 
 /**
@@ -111,13 +110,10 @@ export default class CustomerController {
    * @memberof CustomerController
    */
   static async getCustomerProfile(req, res, next) {
-    // fix the bugs in this code
-    const { customer_id } = req; // eslint-disable-line
+    const customer_id = parseInt(req.user.customer_id, 10);
     try {
-      const customer = await Customer.findByPk(customer_id);
-      return res.status(400).json({
-        customer,
-      });
+      const data = await CustomerService.getCustomerById(customer_id);
+      return http.httpSingleRecordResponse(req, res, data)
     } catch (error) {
       return next(error);
     }
