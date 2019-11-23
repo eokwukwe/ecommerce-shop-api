@@ -38,7 +38,7 @@ export const validator = async (inputData, schema) => {
  * @returns {object} the formatted error message object
  * @method
  */
-const errorFormatter = (message, errorCode, field) => ({
+export const errorFormatter = (message, errorCode, field) => ({
   message,
   code: errorCode,
   field,

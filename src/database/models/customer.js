@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import Authentication from '../../middlewares/authentication'
+import Authentication from '../../middlewares/authentication';
 
 export default (sequelize, DataTypes) => {
   const Customer = sequelize.define(
@@ -76,8 +76,30 @@ export default (sequelize, DataTypes) => {
   };
 
   Customer.prototype.generateToken = function generateToken() {
-    return Authentication.generateToken(this.customer_id)
-  }
+    return Authentication.generateToken(this.customer_id);
+  };
+
+  Customer.prototype.updateAddress = async function updateAddress(address) {
+    const {
+      address_1,
+      address_2,
+      city,
+      region,
+      postal_code,
+      country,
+      shipping_region_id,
+    } = address;
+    this.address_1 = address_1 || this.address_1;
+    this.address_2 = address_2 || this.address_2;
+    this.city = city || this.city;
+    this.region = region || this.region;
+    this.postal_code = postal_code || this.postal_code;
+    this.country = country || this.country;
+    this.shipping_region_id = parseInt(shipping_region_id, 10) || this.shipping_region_id;
+    await this.save();
+    await this.reload();
+    return this;
+  };
 
   Customer.associate = ({ Order }) => {
     // associations can be defined here

@@ -14,7 +14,8 @@ describe('customer controller', () => {
     done();
   });
 
-  describe('create', () => {
+  describe('CRUD', () => {
+    let token;
     it('should return 400 error if user register with invalid email', async () => {
       const response = await request(app)
         .post(baseUrl)
@@ -44,6 +45,51 @@ describe('customer controller', () => {
       const response = await request(app)
         .post(`${baseUrl}/login`)
         .send({ email: 'test@test.com', password: 'password' });
+      token = response.body.accessToken;
+      expect(response.statusCode).toBe(200);
+    });
+    it('should return a status of 401 if user makes request without access_token', async () => {
+      const addressUpdate = {
+        address_1: '12 sango road',
+        city: 'Yaba',
+        region: 'Europe',
+        postal_code: '112340',
+        country: 'Itay',
+        shipping_region_id: '1',
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/address`)
+        .send(addressUpdate);
+      expect(response.statusCode).toBe(401);
+    });
+    it('should return a status of 400 if user omits a required field', async () => {
+      const addressUpdate = {
+        address_1: '1sango road',
+        city: 'Yaba',
+        region: 'Europe',
+        postal_code: '112340',
+        country: '',
+        shipping_region_id: '1',
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/address`)
+        .set({ USER_KEY: token })
+        .send(addressUpdate);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return a status of 200 for a successful address update', async () => {
+      const addressUpdate = {
+        address_1: '12 sango road',
+        city: 'Yaba',
+        region: 'Europe',
+        postal_code: '112340',
+        country: 'Spain',
+        shipping_region_id: '1',
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/address`)
+        .set({ USER_KEY: token })
+        .send(addressUpdate);
       expect(response.statusCode).toBe(200);
     });
     it('should return a status of 400 for a facebook login without access code', async () => {

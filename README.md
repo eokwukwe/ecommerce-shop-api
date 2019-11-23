@@ -11,6 +11,7 @@ In order to install and run this project locally, you would need to have the fol
 - [**Node JS**](https://nodejs.org/en/)
 - [**Express**](https://expressjs.com/)
 - [**MySQL**](https://www.mysql.com/downloads/)
+- [**Redis**](https://redis.io/)
 
 ### Installation
 
@@ -30,6 +31,7 @@ cp .env.sample .env
 ```sh
 mysql -u <dbuser> -D <databasename> -p < ./src/database/database.sql
 ```
+- Start the `redis` server
 
 - Run `npm run dev` to start the app in development
 

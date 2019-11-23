@@ -7,7 +7,6 @@ export const dbConfig = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    logging: false,
     dialectOptions: {
       multipleStatements: true,
     },
@@ -18,7 +17,6 @@ export const dbConfig = {
     database: process.env.TEST_DB_NAME,
     host: process.env.TEST_DB_HOST,
     dialect: 'mysql',
-    logging: false,
     dialectOptions: {
       multipleStatements: true,
     },
@@ -29,6 +27,5 @@ export const dbConfig = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    logging: false,
   },
 };
