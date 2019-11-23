@@ -152,8 +152,8 @@ export default class CustomerController {
 		const { customer } = req;
 		try {
 			const updateAddress = await customer.updateAddress(req.body);
-			console.log(updateAddress);
 			const data = updateAddress.dataValues;
+			delete data.password
 			return http.httpSingleRecordResponse(req, res, data, 200);
 		} catch (error) {
 			next(error);
