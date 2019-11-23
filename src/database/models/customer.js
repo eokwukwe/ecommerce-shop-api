@@ -101,6 +101,18 @@ export default (sequelize, DataTypes) => {
     return this;
   };
 
+  Customer.prototype.updateProfile = async function updateProfile(profile) {
+    const { name, email, day_phone, eve_phone, mob_phone } = profile;
+    this.name = name || this.name;
+    this.email = email || this.email;
+    this.day_phone = day_phone || this.day_phone;
+    this.eve_phone = eve_phone || this.eve_phone;
+    this.mob_phone = mob_phone || this.mob_phone;
+    await this.save();
+    await this.reload();
+    return this;
+  };
+
   Customer.associate = ({ Order }) => {
     // associations can be defined here
     Customer.hasMany(Order, {
