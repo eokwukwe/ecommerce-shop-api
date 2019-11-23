@@ -89,28 +89,36 @@ export default (sequelize, DataTypes) => {
       country,
       shipping_region_id,
     } = address;
-    this.address_1 = address_1 || this.address_1;
+    this.address_1 = address_1
     this.address_2 = address_2 || this.address_2;
-    this.city = city || this.city;
-    this.region = region || this.region;
-    this.postal_code = postal_code || this.postal_code;
-    this.country = country || this.country;
-    this.shipping_region_id = parseInt(shipping_region_id, 10) || this.shipping_region_id;
+    this.city = city
+    this.region = region
+    this.postal_code = postal_code
+    this.country = country;
+    this.shipping_region_id = parseInt(shipping_region_id, 10);
     await this.save();
     await this.reload();
-    return this;
+    return this.getSafeDataValues();
   };
 
   Customer.prototype.updateProfile = async function updateProfile(profile) {
     const { name, email, day_phone, eve_phone, mob_phone } = profile;
-    this.name = name || this.name;
-    this.email = email || this.email;
+    this.name = name;
+    this.email = email;
     this.day_phone = day_phone || this.day_phone;
     this.eve_phone = eve_phone || this.eve_phone;
     this.mob_phone = mob_phone || this.mob_phone;
     await this.save();
     await this.reload();
-    return this;
+    return this.getSafeDataValues();
+  };
+
+  Customer.prototype.updateCreditCard = async function updateCreditCard(card) {
+    const { credit_card } = card;
+    this.credit_card = credit_card;
+    await this.save();
+    await this.reload();
+    return this.getSafeDataValues();
   };
 
   Customer.associate = ({ Order }) => {

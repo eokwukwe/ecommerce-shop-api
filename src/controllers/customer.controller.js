@@ -137,9 +137,7 @@ export default class CustomerController {
     const { customer } = req;
     try {
       const updateProfile = await customer.updateProfile(req.body);
-      const data = updateProfile.dataValues;
-      delete data.password;
-      return http.httpSingleRecordResponse(req, res, data, 200);
+      return http.httpSingleRecordResponse(req, res, updateProfile, 200);
     } catch (error) {
       next(error);
     }
@@ -159,9 +157,7 @@ export default class CustomerController {
     const { customer } = req;
     try {
       const updateAddress = await customer.updateAddress(req.body);
-      const data = updateAddress.dataValues;
-      delete data.password;
-      return http.httpSingleRecordResponse(req, res, data, 200);
+      return http.httpSingleRecordResponse(req, res, updateAddress, 200);
     } catch (error) {
       next(error);
     }
@@ -178,7 +174,12 @@ export default class CustomerController {
    * @memberof CustomerController
    */
   static async updateCreditCard(req, res, next) {
-    // write code to update customer credit card number
-    return res.status(200).json({ message: 'this works' });
+    try {
+      const { customer } = req;
+			const updateCreditCard = await customer.updateCreditCard(req.body);
+      return http.httpSingleRecordResponse(req, res, updateCreditCard, 200);
+    } catch (error) {
+      next(error);
+    }
   }
 }

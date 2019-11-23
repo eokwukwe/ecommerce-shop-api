@@ -13,9 +13,14 @@ router.post('/customers/facebook', validateInput, CustomerController.facebookLog
 
 router.post('/customers/login', validateInput, CustomerController.login);
 
-// router.post('/customers', CustomerController.updateCreditCard);
+router.put(
+  '/customers/creditCard',
+  Authentication.verifyToken,
+  findCustomer,
+  validateInput,
+  CustomerController.updateCreditCard
+);
 // router.get('/customer', CustomerController.getCustomerProfile);
-// router.put('/customer', CustomerController.apply);
 
 router.put(
   '/customers/address',
