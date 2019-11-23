@@ -35,6 +35,17 @@ export default class CustomerService extends BaseService {
   }
 
   /**
+   * @description This method fetches a customer by ID
+   * @param  {number} customer_id
+   * @returns  {Promise<object>} customer
+   * @member CustomerService
+   */
+  static async getCustomerById(id) {
+    const customer = await this.findByPk(Customer, id);
+    return customer.getSafeDataValues();
+  }
+
+  /**
    * @description This service formats customer object to be returned to the client
    * @param  {object} customerData
    * @returns  {object} formatted customer object

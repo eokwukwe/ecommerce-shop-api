@@ -120,6 +120,12 @@ describe('customer controller', () => {
         .send(profile);
       expect(response.statusCode).toBe(200);
     });
+    it('should return a status of 200 for a successful profile data fetch', async () => {
+      const response = await request(app)
+        .get(baseUrl)
+        .set({ USER_KEY: token })
+      expect(response.statusCode).toBe(200);
+    });
     it('should return a status of 400 if user omits a required field', async () => {
       const response = await request(app)
         .put(`${baseUrl}/creditCard`)

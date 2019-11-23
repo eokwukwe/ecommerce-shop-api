@@ -1,5 +1,4 @@
 import createCache from './createCache';
-import logger from './logger';
 
 /**
  * @class BaseController

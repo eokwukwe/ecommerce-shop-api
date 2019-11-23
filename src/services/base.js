@@ -24,4 +24,16 @@ export default class BaseService {
       include,
     });
   }
+
+  /**
+   * @description This fetches a record from the database by ID
+   * @param  {object} model
+   * @param {object} option The condition for the query
+   * @param {array} include Array of associated records to include
+   * @returns {object} one row
+   * @member BaseService
+   */
+  static async findByPk(model, id) {
+    return await model.findByPk(id);
+  }
 }

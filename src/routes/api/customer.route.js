@@ -7,11 +7,30 @@ import validateInput from '../../middlewares/validateInput';
 import { findShippingRegion } from '../../middlewares/findShipping';
 
 const router = Router();
-router.post('/customers', validateInput, checkUniqueEmail, CustomerController.create);
+router.post(
+  '/customers',
+  validateInput,
+  checkUniqueEmail,
+  CustomerController.create
+);
 
-router.post('/customers/facebook', validateInput, CustomerController.facebookLogin);
+router.post(
+  '/customers/facebook',
+  validateInput,
+  CustomerController.facebookLogin
+);
 
-router.post('/customers/login', validateInput, CustomerController.login);
+router.post(
+  '/customers/login',
+  validateInput,
+  CustomerController.login
+);
+
+router.get(
+  '/customers',
+  Authentication.verifyToken,
+  CustomerController.getCustomerProfile
+);
 
 router.put(
   '/customers/creditCard',
@@ -20,7 +39,6 @@ router.put(
   validateInput,
   CustomerController.updateCreditCard
 );
-// router.get('/customer', CustomerController.getCustomerProfile);
 
 router.put(
   '/customers/address',
