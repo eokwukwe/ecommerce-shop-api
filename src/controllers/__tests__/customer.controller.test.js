@@ -120,6 +120,20 @@ describe('customer controller', () => {
         .send(profile);
       expect(response.statusCode).toBe(200);
     });
+    it('should return a status of 400 if user omits a required field', async () => {
+      const response = await request(app)
+        .put(`${baseUrl}/creditCard`)
+        .set({ USER_KEY: token })
+        .send({ credit_card: '' });
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return a status of 200 for a successful creditCard update', async () => {
+      const response = await request(app)
+        .put(`${baseUrl}/creditCard`)
+        .set({ USER_KEY: token })
+        .send({ credit_card: '1215251211144' });
+      expect(response.statusCode).toBe(200);
+    });
     it('should return a status of 400 for a facebook login without access code', async () => {
       mock
         .onGet('https://graph.facebook.com/me?fields=name,email&access_token=ecommerce')
