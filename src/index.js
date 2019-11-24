@@ -1,15 +1,18 @@
 import '@babel/polyfill';
+import cors from 'cors';
+import log from 'fancy-log';
+import morgan from 'morgan';
+import helmet from 'helmet';
 import express from 'express';
 import winston from 'winston';
-import expressWinston from 'express-winston';
-import morgan from 'morgan';
-import log from 'fancy-log';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import helmet from 'helmet';
-import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import expressWinston from 'express-winston';
+
 import router from './routes';
 import logger from './helpers/logger';
+import swaggerDoc from './swagger.json'
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -45,7 +48,7 @@ app.use(
 );
 
 app.use('/stripe/charge', express.static(`${__dirname}/public`));
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use(router);
 
 // catch 404 and forward to error handler
