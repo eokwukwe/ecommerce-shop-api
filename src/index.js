@@ -12,7 +12,7 @@ import expressWinston from 'express-winston';
 
 import router from './routes';
 import logger from './helpers/logger';
-import swaggerDoc from './swagger.json'
+import swaggerDoc from './swagger.json';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -49,6 +49,15 @@ app.use(
 
 app.use('/stripe/charge', express.static(`${__dirname}/public`));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.get('/', (req, res) => {
+  res.send(
+    `<h1>Welcome to ECOMMERCE API</h1>
+    <p>For any more info please visit the
+    <a href='https://fcode-ecommerce.herokuapp.com/api-docs'>API Documentation</a></P>
+    <h4>Thanks  &#x1F600;</h4>`
+  );
+});
+
 app.use(router);
 
 // catch 404 and forward to error handler

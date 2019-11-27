@@ -1,31 +1,36 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const { DB_HOST, DB_NAME, DB_USER, DB_PASS, TEST_DB_NAME, JAWSDB_MARIA_URL } = process.env;
 
 export const dbConfig = {
   development: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
+    username: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
+    host: DB_HOST,
     dialect: 'mysql',
     dialectOptions: {
       multipleStatements: true,
     },
   },
   test: {
-    username: process.env.TEST_DB_USER,
-    password: process.env.TEST_DB_PASS,
-    database: process.env.TEST_DB_NAME,
-    host: process.env.TEST_DB_HOST,
+    username: DB_USER,
+    password: DB_PASS,
+    database: TEST_DB_NAME,
+    host: DB_HOST,
     dialect: 'mysql',
     dialectOptions: {
       multipleStatements: true,
     },
   },
   production: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
+    url: JAWSDB_MARIA_URL,
     dialect: 'mysql',
+    logging: false,
+    dialectOptions: {
+      multipleStatements: true,
+    },
   },
 };

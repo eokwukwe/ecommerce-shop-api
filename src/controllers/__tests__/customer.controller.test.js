@@ -95,7 +95,7 @@ describe('customer controller', () => {
     it('should return a status of 400 if user omits a required field', async () => {
       const profile = {
         name: '',
-        email: 'john@doe.com',
+        email: 'test@test.com',
         day_phone: '+351323213511235',
         eve_phone: '+452436143246123',
         mob_phone: '+351323213511235',
@@ -109,7 +109,7 @@ describe('customer controller', () => {
     it('should return a status of 200 for a successful profile update', async () => {
       const profile = {
         name: 'john doe',
-        email: 'john@doe.com',
+        email: 'test@test.com',
         day_phone: '+351323213511235',
         eve_phone: '+452436143246123',
         mob_phone: '+351323213511235',
@@ -123,7 +123,7 @@ describe('customer controller', () => {
     it('should return a status of 200 for a successful profile data fetch', async () => {
       const response = await request(app)
         .get(baseUrl)
-        .set({ USER_KEY: token })
+        .set({ USER_KEY: token });
       expect(response.statusCode).toBe(200);
     });
     it('should return a status of 400 if user omits a required field', async () => {
@@ -142,7 +142,7 @@ describe('customer controller', () => {
     });
     it('should return a status of 400 for a facebook login without access code', async () => {
       mock
-        .onGet('https://graph.facebook.com/me?fields=name,email&access_token=ecommerce')
+        .onGet('https://graph.facebook.com/me?fields=name,email&access_token=ecommercesssss')
         .reply(200, {
           email: 'test@test1.com',
           name: 'John doe',
@@ -154,7 +154,7 @@ describe('customer controller', () => {
       mock
         .onGet('https://graph.facebook.com/me?fields=name,email&access_token=ecommerce')
         .reply(200, {
-          email: 'test@test1.com',
+          email: 'test@test419.com',
           name: 'John doe',
         });
       const response = await request(app)
