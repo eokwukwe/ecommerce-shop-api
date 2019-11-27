@@ -7,14 +7,14 @@
   "author": "Okwukwe Ewurum",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/index.js",
+    "build": "cross-env NODE_ENV=production babel src -d dist --copy-files",
     "dev": "nodemon --watch src --exec babel-node ./src/index.js",
     "pre-test-dev": "cross-env NODE_ENV=test babel-node ./src/test/migrate.js",
-    "pretest": "npm run seed",
+    "pretest": "npm run seed-test",
     "test": "jest --no-cache  --detectOpenHandles --runInBand --coverage --colors --forceExit",
-    "build": "cross-env NODE_ENV=production babel src -d dist --copy-files",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
-    "test:watch": "npm run seed && jest --no-cache  --detectOpenHandles --runInBand --watchAll --coverage --colors",
-    "seed": "npm run pre-test-dev && cross-env NODE_ENV=test babel-node ./src/test/seed.js"
+    "test:watch": "npm run seed-test && jest --no-cache  --detectOpenHandles --runInBand --watchAll --coverage --colors",
+    "seed-test": "npm run pre-test-dev && cross-env NODE_ENV=test babel-node ./src/test/seed.js"
   },
   "keywords": [
     "ecommerce",
