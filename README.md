@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/eokwukwe/ecommerce-shop-api.svg?branch=develop)](https://travis-ci.org/eokwukwe/ecommerce-shop-api) [![Maintainability](https://api.codeclimate.com/v1/badges/f849340fdd26b328d6f6/maintainability)](https://codeclimate.com/github/eokwukwe/ecommerce-shop-api/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/f849340fdd26b328d6f6/test_coverage)](https://codeclimate.com/github/eokwukwe/ecommerce-shop-api/test_coverage)
 
-# eCommerce-shop-api
+# ecommerce-shop-api
 
 ## Getting started
 
