@@ -1,0 +1,659 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a ecommerce API",
+    "version": "1.0.0",
+    "title": "Ecommerce API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "okwukwe.ewurum@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "fcode-ecommerce.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Customers",
+      "description": "Everything about Customers"
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/customers": {
+      "post": {
+        "tags": ["Customers"],
+        "summary": "Register a new Customer",
+        "description": "Register a new Customer",
+        "operationId": "create",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The user object to register",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newCustomer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new user object with auth token",
+            "schema": {
+              "$ref": "#/components/schemas/userResponse"
+            }
+          },
+          "400": {
+            "description": "The email already exists",
+            "schema": {
+              "$ref": "#/components/schemas/userError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Customers"],
+        "summary": "Get a Customer",
+        "description": "Get a Customer profile data",
+        "operationId": "getCustomerProfile",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "USER_KEY",
+            "in": "header",
+            "description": "user authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new user object",
+            "schema": {
+              "$ref": "#/components/schemas/updateResponse"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
+    },
+    "/customers/profile": {
+      "put": {
+        "tags": ["Customers"],
+        "summary": "update customer profile data",
+        "description": "update customer profile data such as name, email, day_phone, eve_phone and mob_phone",
+        "operationId": "updateCustomerProfile",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "USER_KEY",
+            "in": "header",
+            "description": "user authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user object",
+            "in": "body",
+            "description": "user object to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/profileData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new user object",
+            "schema": {
+              "$ref": "#/components/schemas/updateResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
+    },
+    "/customers/login": {
+      "post": {
+        "tags": ["Customers"],
+        "summary": "Login a registered Customer",
+        "description": "Login a registered Customer",
+        "operationId": "login",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The user object to register",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/customer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sign in user object",
+            "schema": {
+              "$ref": "#/components/schemas/userResponse"
+            }
+          },
+          "400": {
+            "description": "Email or Password is invalid",
+            "schema": {
+              "$ref": "#/components/schemas/loginError"
+            }
+          }
+        }
+      }
+    },
+    "/customers/facebook": {
+      "post": {
+        "tags": ["Customers"],
+        "summary": "Login a customer via facebook",
+        "description": "Login a via facebook",
+        "operationId": "facebookLogin",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "facebook access_token",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/facebook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sign in user object",
+            "schema": {
+              "$ref": "#/components/schemas/userResponse"
+            }
+          },
+          "400": {
+            "description": "access_token is required",
+            "schema": {
+              "$ref": "#/components/schemas/facebookError"
+            }
+          }
+        }
+      }
+    },
+    "/customers/creditCard": {
+      "put": {
+        "tags": ["Customers"],
+        "summary": "Update customer credit card",
+        "description": "Update custumer credit card",
+        "operationId": "updateCreditCard",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "USER_KEY",
+            "in": "header",
+            "type": "string",
+            "description": "user Authentication key"
+          },
+          {
+            "name": "credit_card",
+            "in": "body",
+            "description": "user credit card",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/creditCard"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updated user record",
+            "schema": {
+              "$ref": "#/components/schemas/updateResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
+    },
+    "/customers/address": {
+      "put": {
+        "tags": ["Customers"],
+        "summary": "Update customer Address",
+        "description": "Update customer profile data such as address_1, address_2, city, region, postal_code, country and shipping_region_id",
+        "operationId": "updateCustomerAddress",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "USER_KEY",
+            "in": "header",
+            "type": "string",
+            "description": "user Authentication key"
+          },
+          {
+            "name": "address",
+            "in": "body",
+            "description": "user credit card",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/address"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updated user record",
+            "schema": {
+              "$ref": "#/components/schemas/updateResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "newCustomer": {
+      "type": "object",
+      "required": ["name", "email", "password"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@doe.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "johndoe"
+        }
+      }
+    },
+    "profileData": {
+      "type": "object",
+      "required": ["name", "email"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@doe.com"
+        },
+        "day_phone": {
+          "type": "string",
+          "example": "+236585488455588"
+        },
+        "mob_phone": {
+          "type": "string",
+          "example": "+236585488455588"
+        },
+        "eve_phone": {
+          "type": "string",
+          "example": "+236585488455588"
+        }
+      }
+    },
+    "customer": {
+      "type": "object",
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "john@doe.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "johndoe"
+        }
+      }
+    },
+    "facebook": {
+      "type": "object",
+      "required": ["access_token"],
+      "properties": {
+        "access_token": {
+          "type": "string"
+        }
+      }
+    },
+    "creditCard": {
+      "type": "object",
+      "required": ["credit_card"],
+      "properties": {
+        "credit_card": {
+          "type": "string"
+        }
+      }
+    },
+    "address": {
+      "type": "object",
+      "required": ["address_1", "shipping_region_id", "city", "postal_code", "region", "country"],
+      "properties": {
+        "address_1": {
+          "type": "string"
+        },
+        "address_2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "shipping_region_id": {
+          "type": "integer"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "userResponse": {
+        "type": "object",
+        "properties": {
+          "customer": {
+            "type": "object",
+            "properties": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customer_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Lannucci"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "lannucci@hotmail.com"
+                  },
+                  "address_1": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "address_2": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "region": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "postal_code": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "shipping_region_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "day_phone": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "eve_phone": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "mob_phone": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "credit_card": {
+                    "type": "string",
+                    "example": "XXXXXXXXXXXXXXX025"
+                  }
+                }
+              },
+              "accessToken": {
+                "type": "string",
+                "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE1NTA0MjQ0OTgsImV4cCI6MTU1MDUxMDg5OH0.aEFrNUPRWuRWx0IOEL-_A4J4Ti39iXEHAScm6GI61RR"
+              },
+              "expires_in": {
+                "type": "string",
+                "example": "24h"
+              }
+            }
+          }
+        }
+      },
+      "updateResponse": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Lannucci"
+          },
+          "email": {
+            "type": "string",
+            "example": "lannucci@hotmail.com"
+          },
+          "address_1": {
+            "type": "string",
+            "example": "12 old rode"
+          },
+          "address_2": {
+            "type": "string",
+            "example": ""
+          },
+          "city": {
+            "type": "string",
+            "example": "city"
+          },
+          "region": {
+            "type": "string",
+            "example": "region"
+          },
+          "postal_code": {
+            "type": "string",
+            "example": "212121"
+          },
+          "country": {
+            "type": "string",
+            "example": "country"
+          },
+          "shipping_region_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "day_phone": {
+            "type": "string",
+            "example": "+36225225225"
+          },
+          "eve_phone": {
+            "type": "string",
+            "example": "+3653653658"
+          },
+          "mob_phone": {
+            "type": "string",
+            "example": "+125242154111"
+          },
+          "credit_card": {
+            "type": "string",
+            "example": "XXXXXXXXXXXXXXX025"
+          }
+        }
+      },
+      "userError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "USR_04"
+          },
+          "message": {
+            "type": "string",
+            "example": "The email already exists"
+          },
+          "field": {
+            "type": "string",
+            "example": "email"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        }
+      },
+      "loginError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "USR_01"
+          },
+          "message": {
+            "type": "string",
+            "example": "Email or Password is invalid."
+          },
+          "field": {
+            "type": "string",
+            "example": "email/password"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        }
+      },
+      "facebookError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "USR_01"
+          },
+          "message": {
+            "type": "string",
+            "example": "access_token is not allowed to be empty"
+          },
+          "field": {
+            "type": "string",
+            "example": "access_token"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        }
+      },
+      "inputError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "USR_03"
+          },
+          "message": {
+            "type": "string",
+            "example": "This field is not allowed to be empty"
+          },
+          "field": {
+            "type": "string",
+            "example": "example"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        }
+      },
+      "authError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "AUT_02"
+          },
+          "message": {
+            "type": "string",
+            "example": "The apikey is invalid."
+          },
+          "field": {
+            "type": "string",
+            "example": "API_KEY"
+          },
+          "status": {
+            "type": "integer",
+            "example": 401
+          }
+        }
+      }
+    }
+  }
+}
