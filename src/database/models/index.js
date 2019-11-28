@@ -8,9 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = dbConfig[env];
 const db = {};
 
-export const sequelize = config.use_env_variable
-  ? new Sequelize(process.env[config.use_env_variable], config)
-  : new Sequelize(config.database, config.username, config.password, config);
+export const sequelize = env === 'production' ? new Sequelize(config.url, config) : new Sequelize(config.database, config.username, config.password, config);
 
 fs.readdirSync(__dirname)
   .filter(file => {
