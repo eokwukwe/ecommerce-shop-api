@@ -26,7 +26,7 @@ export const dbConfig = {
     },
   },
   production: {
-    use_env_variable: JAWSDB_MARIA_URL,
+    url: JAWSDB_MARIA_URL,
     dialect: 'mysql',
     logging: false,
     dialectOptions: {
