@@ -339,8 +339,8 @@ INSERT INTO `shipping_region` (`shipping_region_id`, `shipping_region`) VALUES
        (1, 'Please Select') , (2, 'US / Canada'),
        (3, 'Europe'),         (4, 'Rest of World');
 
-INSERT INTO `customer` (`customer_id`, `name`, `email`, `password`) VALUES
-       (1, 'admin', 'admin@ecommerce.com', '$2b$10$WbvvXLnFa3bLATQe7.U9jeKtiK9cIdafqjd3hGgzrbhkpYJmKbVdm');
+INSERT INTO `customer` (`customer_id`, `name`, `email`, `password`, `is_admin`) VALUES
+       (1, 'admin', 'admin@ecommerce.com', '$2b$10$WbvvXLnFa3bLATQe7.U9jeKtiK9cIdafqjd3hGgzrbhkpYJmKbVdm', true);
 
 -- Populate shipping table
 INSERT INTO `shipping` (`shipping_id`,   `shipping_type`,

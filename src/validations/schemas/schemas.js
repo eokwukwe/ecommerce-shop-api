@@ -86,6 +86,12 @@ const credit_card = Joi.string()
   .trim()
   .label('credit_card');
 
+const description = Joi.string()
+  .allow('')
+  .trim()
+  .strict()
+  .label('description');
+
 export const signUpSchema = Joi.object().keys({
   name,
   email,
@@ -121,4 +127,9 @@ export const updateProfileSchema = Joi.object().keys({
 
 export const updateCreditCardSchema = Joi.object().keys({
   credit_card,
+});
+
+export const departmentSchema = Joi.object().keys({
+  name,
+  description
 });
