@@ -19,6 +19,10 @@
     {
       "name": "Customers",
       "description": "Everything about Customers"
+    },
+    {
+      "name": "Departments",
+      "description": "Everything about department"
     }
   ],
   "schemes": ["https", "http"],
@@ -300,6 +304,47 @@
           }
         }
       }
+    },
+    "/departments": {
+      "post": {
+        "tags": ["Departments"],
+        "summary": "Create a new department",
+        "description": "Create a new department",
+        "operationId": "create",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The department object to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newDepartment"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "new department create",
+            "schema": {
+              "$ref": "#/components/schemas/departmentResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -403,6 +448,20 @@
         },
         "country": {
           "type": "string"
+        }
+      }
+    },
+    "newDepartment": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "new department"
+        },
+        "description": {
+          "type": "string",
+          "example": "new description"
         }
       }
     }
@@ -651,6 +710,23 @@
           "status": {
             "type": "integer",
             "example": 401
+          }
+        }
+      },
+      "departmentResponse": {
+        "type": "object",
+        "properties": {
+          "department_id": {
+            "type": "interger",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "new department"
+          },
+          "description": {
+            "type": "string",
+            "example": "new description"
           }
         }
       }

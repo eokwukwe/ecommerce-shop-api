@@ -21,7 +21,7 @@ export default async (req, res, next) => {
         message: 'Access denied.',
         field: 'NoAuth',
       };
-      return http.httpErrorResponse(res, options, 404);
+      return http.httpErrorResponse(res, options, 401);
     }
     return next();
   } catch (error) {

@@ -11,6 +11,7 @@ export const dbConfig = {
     database: DB_NAME,
     host: DB_HOST,
     dialect: 'mysql',
+    logging: false,
     dialectOptions: {
       multipleStatements: true,
     },
@@ -21,6 +22,7 @@ export const dbConfig = {
     database: TEST_DB_NAME,
     host: DB_HOST,
     dialect: 'mysql',
+    logging: false,
     dialectOptions: {
       multipleStatements: true,
     },
