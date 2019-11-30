@@ -28,12 +28,21 @@ export default class BaseService {
   /**
    * @description This fetches a record from the database by ID
    * @param  {object} model
-   * @param {object} option The condition for the query
-   * @param {array} include Array of associated records to include
    * @returns {object} one row
    * @member BaseService
    */
   static async findByPk(model, id) {
     return await model.findByPk(id);
+  }
+
+  /**
+   * @description This fetches all the records from a table
+   * @param  {object} model
+   * @param {object} option The condition for the query and attributes required
+   * @returns {object} all rows
+   * @member BaseService
+   */
+  static async findAll(model, options = {}) {
+    return await model.findAll(options);
   }
 }

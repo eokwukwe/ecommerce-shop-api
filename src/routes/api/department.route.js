@@ -16,4 +16,6 @@ router.post(
   DepartmentController.create
 );
 
+router.get('/departments', DepartmentController.getAllDepartments);
+
 export default router;
