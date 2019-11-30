@@ -50,4 +50,11 @@ describe('department controller', () => {
       expect(response.statusCode).toBe(400);
     });
   });
+
+  describe('Get departments', () => {
+    it('should return 200 for successful departments fetch', async () => {
+      const response = await request(app).get(baseUrl);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });

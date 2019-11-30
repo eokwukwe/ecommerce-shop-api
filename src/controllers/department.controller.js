@@ -10,7 +10,7 @@ import DepartmentService from '../services/department';
  */
 export default class DepartmentController {
   /**
-   * create a customer record
+   * create a department record
    *
    * @static
    * @param {object} req express request object
@@ -27,6 +27,25 @@ export default class DepartmentController {
         description,
       });
       return http.httpSingleRecordResponse(req, res, newDepartment, 201);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Get all departments
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {array} array of JSON Object of departments
+   * @memberof DepartmentController
+   */
+  static async getAllDepartments(req, res, next) {
+    try {
+      const allDepartments = await DepartmentService.getDepartments();
+      return http.httpCollectionRecordResponse(req, res, allDepartments, true);
     } catch (error) {
       next(error);
     }

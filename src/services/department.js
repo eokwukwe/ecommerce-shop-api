@@ -8,7 +8,7 @@ const { Department } = models;
  */
 export default class DepartmentService extends BaseService {
   /**
-   * @description This creates a new department
+   * @description This method creates a new department
    *
    * @param {object} payload Department data
    * @returns {object} Return a Object of created department
@@ -16,5 +16,14 @@ export default class DepartmentService extends BaseService {
   static async createDepartment(payload) {
     const department = await this.create(Department, payload);
     return department.dataValues;
+  }
+
+  /**
+   * @description This method fetches all departments
+   *
+   * @returns {object} Return a Object of created department
+   */
+  static async getDepartments() {
+    return await this.findAll(Department);
   }
 }
