@@ -48,7 +48,12 @@ export default (sequelize, DataTypes) => {
       day_phone: DataTypes.STRING(100),
       eve_phone: DataTypes.STRING(100),
       mob_phone: DataTypes.STRING(100),
+      is_admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
+
     {
       underscored: true,
       tableName: 'customer',
@@ -71,7 +76,7 @@ export default (sequelize, DataTypes) => {
   };
 
   Customer.prototype.getSafeDataValues = function getSafeDataValues() {
-    const { password, ...data } = this.dataValues;
+    const { password, is_admin, ...data } = this.dataValues;
     return data;
   };
 
@@ -89,11 +94,11 @@ export default (sequelize, DataTypes) => {
       country,
       shipping_region_id,
     } = address;
-    this.address_1 = address_1
+    this.address_1 = address_1;
     this.address_2 = address_2 || this.address_2;
-    this.city = city
-    this.region = region
-    this.postal_code = postal_code
+    this.city = city;
+    this.region = region;
+    this.postal_code = postal_code;
     this.country = country;
     this.shipping_region_id = parseInt(shipping_region_id, 10);
     await this.save();
