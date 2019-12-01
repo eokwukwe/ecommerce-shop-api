@@ -57,4 +57,19 @@ describe('department controller', () => {
       expect(response.statusCode).toBe(200);
     });
   });
+
+  describe('Get department by ID', () => {
+    it('should return 400 if the ID is not a number', async () => {
+      const response = await request(app).get(`${baseUrl}/ab`);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if the department does not exist', async () => {
+      const response = await request(app).get(`${baseUrl}/10`);
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 200 if the department exists', async () => {
+      const response = await request(app).get(`${baseUrl}/1`);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });

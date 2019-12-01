@@ -344,6 +344,50 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": ["Departments"],
+        "summary": "Get all departments",
+        "description": "Get all departments",
+        "operationId": "getAllDepartments",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An array of departments",
+            "schema": {
+              "$ref": "#/components/schemas/allDepartmentsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/departments/{id}": {
+      "get": {
+        "tags": ["Departments"],
+        "summary": "Get a department",
+        "description": "Get one department by the department ID",
+        "operationId": "getOneDepartment",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An object of department",
+            "schema": {
+              "$ref": "#/components/schemas/departmentResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
       }
     }
   },
@@ -727,6 +771,46 @@
           "description": {
             "type": "string",
             "example": "new description"
+          }
+        }
+      },
+      "allDepartmentsResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/departmentResponse"
+        }
+      },
+      "notFoundResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "USR_03"
+          },
+          "message": {
+            "type": "string",
+            "example": "Does not exist example with ID 5"
+          },
+          "status": {
+            "type": "integer",
+            "example": 404
+          }
+        }
+      },
+      "invalidIdResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "USR_09"
+          },
+          "message": {
+            "type": "string",
+            "example": "The ID is not a number"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
           }
         }
       }
