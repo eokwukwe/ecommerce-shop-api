@@ -26,4 +26,13 @@ export default class DepartmentService extends BaseService {
   static async getDepartments() {
     return await this.findAll(Department);
   }
+
+  /**
+   * @description This method fetches a department by Id
+   *
+   * @returns {object} Return a Object of created department
+   */
+  static async getDepartmentById(department_id) {
+    return await this.findByPk(Department, department_id);
+  }
 }

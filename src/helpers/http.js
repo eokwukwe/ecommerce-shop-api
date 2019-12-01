@@ -47,11 +47,12 @@ export default {
    * @return {object} server reponse
    */
   httpErrorResponse(res, options, statusCode) {
+    const {errorCode, message, ...rest} = options;
     const error = {
       status: statusCode,
-      code: options.errorCode,
-      message: options.message,
-      field: options.field,
+      code: errorCode,
+      message: message,
+      ...rest
     };
     return res.status(statusCode).json({ error });
   },
