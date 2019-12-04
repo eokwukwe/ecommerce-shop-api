@@ -7,6 +7,7 @@ import {
   updateProfileSchema,
   updateCreditCardSchema,
   departmentSchema,
+  categorySchema
 } from '../validations/schemas/schemas';
 
 /**
@@ -24,6 +25,7 @@ const getSchema = req => {
     '/profile': updateProfileSchema,
     '/creditCard': updateCreditCardSchema,
     '/departments': departmentSchema,
+    '/categories': categorySchema
   };
   const path = req.originalUrl.split('/').pop();
   return schema[`/${path}`];

@@ -84,13 +84,14 @@ describe('customer controller', () => {
         region: 'Europe',
         postal_code: '112340',
         country: 'Spain',
-        shipping_region_id: '1',
+        shipping_region_id: 1,
       };
       const response = await request(app)
         .put(`${baseUrl}/address`)
         .set({ USER_KEY: token })
         .send(addressUpdate);
-      expect(response.statusCode).toBe(200);
+
+        expect(response.statusCode).toBe(200);
     });
     it('should return a status of 400 if user omits a required field', async () => {
       const profile = {

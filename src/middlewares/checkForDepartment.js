@@ -6,17 +6,14 @@ const { Department } = models;
 
 export default async (req, res, next) => {
   try {
-    const department = await Department.findOne({
-      attributes: ['name'],
-      where: { name: req.body.name },
-    });
-    if (!isEmpty(department)) {
+    const department = await Department.findByPk(req.body.department_id)
+    if (isEmpty(department)) {
       const options = {
-        errorCode: 'DEP_03',
-        message: `Department '${req.body.name}' already exists`,
+        errorCode: 'DEP_02',
+        message: `Department with ID '${req.body.department_id}' does not exists`,
         field: 'department',
       };
-      return http.httpErrorResponse(res, options, 400);
+      return http.httpErrorResponse(res, options, 404);
     }
     return next();
   } catch (error) {
