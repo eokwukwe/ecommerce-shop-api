@@ -33,24 +33,24 @@ export default class CategoryController {
     }
   }
 
-  // /**
-  //  * Get all departments
-  //  *
-  //  * @static
-  //  * @param {object} req express request object
-  //  * @param {object} res express response object
-  //  * @param {object} next next middleware
-  //  * @returns {array} array of JSON Object of departments
-  //  * @memberof DepartmentController
-  //  */
-  // static async getAllDepartments(req, res, next) {
-  //   try {
-  //     const allDepartments = await DepartmentService.getDepartments();
-  //     return http.httpCollectionRecordResponse(req, res, allDepartments, true);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  /**
+   * Get all categories
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {array} array of JSON Object of categories
+   * @memberof CategoryController
+   */
+  static async getAllCategories(req, res, next) {
+    try {
+      const categories = await CategoryService.getCategories();
+      return http.httpCollectionRecordResponse(req, res, categories);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   // /**
   //  * Get a department by id

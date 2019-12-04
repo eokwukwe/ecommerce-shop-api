@@ -45,7 +45,7 @@ export default class DepartmentController {
   static async getAllDepartments(req, res, next) {
     try {
       const allDepartments = await DepartmentService.getDepartments();
-      return http.httpCollectionRecordResponse(req, res, allDepartments, true);
+      return http.httpCollectionRecordResponse(req, res, allDepartments);
     } catch (error) {
       next(error);
     }
