@@ -1,19 +1,22 @@
 import { Router } from 'express';
-import DepartmentController from '../../controllers/department.controller';
+
+import models from '../../database/models';
 import checkAdmin from '../../middlewares/checkAdmin';
-import checkDepartment from '../../middlewares/checkDepartment';
-import Authentication from '../../middlewares/authentication';
 import validateInput from '../../middlewares/validateInput';
+import Authentication from '../../middlewares/authentication';
 import validateIdParams from '../../middlewares/validateIdParams';
+import checkUniqueRecord from '../../middlewares/checkUniqueRecord';
+import DepartmentController from '../../controllers/department.controller';
 
 const router = Router();
+const { Department } = models;
 
 router.post(
   '/departments',
   Authentication.verifyToken,
   checkAdmin,
   validateInput,
-  checkDepartment,
+  checkUniqueRecord(Department),
   DepartmentController.create
 );
 

@@ -56,7 +56,14 @@ const country = Joi.string()
 const shipping_region_id = Joi.number()
   .integer()
   .required()
+  .strict()
   .label('shipping_region_id');
+
+const department_id = Joi.number()
+  .integer()
+  .required()
+  .strict()
+  .label('department_id');
 
 const access_token = Joi.string()
   .required()
@@ -131,5 +138,11 @@ export const updateCreditCardSchema = Joi.object().keys({
 
 export const departmentSchema = Joi.object().keys({
   name,
+  description
+});
+
+export const categorySchema = Joi.object().keys({
+  name,
+  department_id,
   description
 });
