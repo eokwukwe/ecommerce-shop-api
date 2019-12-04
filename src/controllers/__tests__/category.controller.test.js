@@ -65,4 +65,11 @@ describe('category controller', () => {
       expect(response.statusCode).toBe(400);
     });
   });
+
+  describe(' all categories', () => {
+    it('should return 200 for successful categories fetch', async () => {
+      const response = await request(app).get(baseUrl);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });

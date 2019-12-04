@@ -1,7 +1,7 @@
 import models from '../database/models';
 import BaseService from './base';
 
-const { Category } = models;
+const { Category, Department } = models;
 
 /**
  * @class CategoryService

@@ -22,7 +22,7 @@ router.post(
   CategoryController.create
 );
 
-// router.get('/categories', DepartmentController.getAllDepartments);
+router.get('/categories', CategoryController.getAllCategories);
 
 // router.get(
 //   '/categories/:id',
