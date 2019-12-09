@@ -23,7 +23,7 @@ router.post(
 router.get('/departments', DepartmentController.getAllDepartments);
 
 router.get(
-  '/departments/:id',
+  '/departments/:department_id',
   validateIdParams,
   DepartmentController.getOneDepartment
 );
