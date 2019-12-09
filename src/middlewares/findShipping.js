@@ -14,7 +14,7 @@ export const findShippingRegion = async (req, res, next) => {
 			message: `Shipping region with ID ${regionId} not found`,
 			field: 'shipping_region',
 		};
-		return http.httpErrorResponse(res, options, 400);
+		return http.httpErrorResponse(res, options, 404);
 	}
 	return next();
 };
