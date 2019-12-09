@@ -72,4 +72,19 @@ describe('category controller', () => {
       expect(response.statusCode).toBe(200);
     });
   });
+
+  describe('Get category by ID', () => {
+    it('should return 400 if the ID is not a number', async () => {
+      const response = await request(app).get(`${baseUrl}/ab`);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if the category does not exist', async () => {
+      const response = await request(app).get(`${baseUrl}/100`);
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 200 if the category exists', async () => {
+      const response = await request(app).get(`${baseUrl}/1`);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });

@@ -25,7 +25,7 @@ export default class CategoryController {
       const newCategory = await CategoryService.createCategory({
         name,
         description,
-        department_id
+        department_id,
       });
       return http.httpSingleRecordResponse(req, res, newCategory, 201);
     } catch (error) {
@@ -52,30 +52,30 @@ export default class CategoryController {
     }
   }
 
-  // /**
-  //  * Get a department by id
-  //  *
-  //  * @static
-  //  * @param {object} req express request object
-  //  * @param {object} res express response object
-  //  * @param {object} next next middleware
-  //  * @returns {object} JSON Object of department
-  //  * @memberof DepartmentController
-  //  */
-  // static async getOneDepartment(req, res, next) {
-  //   const id = parseInt(req.params.id, 10);
-  //   try {
-  //     const department = await DepartmentService.getDepartmentById(id);
-  //     if(isEmpty(department)) {
-  //       const options = {
-  //         errorCode: 'DEP_02',
-  //         message: `Does not exist department with ID ${id}`
-  //       }
-  //       return http.httpErrorResponse(res,  options, 404)
-  //     }
-  //     return http.httpSingleRecordResponse(req, res, department.dataValues, 200);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  /**
+   * Get a category by id
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {object} JSON Object of category
+   * @memberof CategoryController
+   */
+  static async getCategoryById(req, res, next) {
+    try {
+      const { category_id } = req.params;
+      const category = await CategoryService.getCategoryById(category_id);
+      if (isEmpty(category)) {
+        const options = {
+          errorCode: 'CAT_02',
+          message: `Does not exist category with ID ${category_id}`,
+        };
+        return http.httpErrorResponse(res, options, 404);
+      }
+      return http.httpSingleRecordResponse(req, res, category.dataValues, 200);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

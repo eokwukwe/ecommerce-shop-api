@@ -22,12 +22,15 @@ router.post(
   CategoryController.create
 );
 
-router.get('/categories', CategoryController.getAllCategories);
+router.get(
+  '/categories',
+  CategoryController.getAllCategories
+);
 
-// router.get(
-//   '/categories/:id',
-//   validateIdParams,
-//   DepartmentController.getOneDepartment
-// );
+router.get(
+  '/categories/:category_id',
+  validateIdParams,
+  CategoryController.getCategoryById
+);
 
 export default router;

@@ -23,44 +23,15 @@
     {
       "name": "Departments",
       "description": "Everything about department"
+    },
+    {
+      "name": "Categories",
+      "description": "Everything about category"
     }
   ],
   "schemes": ["https", "http"],
   "paths": {
     "/customers": {
-      "post": {
-        "tags": ["Customers"],
-        "summary": "Register a new Customer",
-        "description": "Register a new Customer",
-        "operationId": "create",
-        "consumes": ["application/json", "application/x-www-form-urlencoded"],
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "The user object to register",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/newCustomer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "new user object with auth token",
-            "schema": {
-              "$ref": "#/components/schemas/userResponse"
-            }
-          },
-          "400": {
-            "description": "The email already exists",
-            "schema": {
-              "$ref": "#/components/schemas/userError"
-            }
-          }
-        }
-      },
       "get": {
         "tags": ["Customers"],
         "summary": "Get a Customer",
@@ -91,51 +62,36 @@
             }
           }
         }
-      }
-    },
-    "/customers/profile": {
-      "put": {
+      },
+      "post": {
         "tags": ["Customers"],
-        "summary": "update customer profile data",
-        "description": "update customer profile data such as name, email, day_phone, eve_phone and mob_phone",
-        "operationId": "updateCustomerProfile",
+        "summary": "Register a new Customer",
+        "description": "Register a new Customer",
+        "operationId": "create",
         "consumes": ["application/json", "application/x-www-form-urlencoded"],
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "USER_KEY",
-            "in": "header",
-            "description": "user authentication token",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "user object",
+            "name": "body",
             "in": "body",
-            "description": "user object to update",
+            "description": "The user object to register",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/profileData"
+              "$ref": "#/definitions/newCustomer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "new user object",
+            "description": "new user object with auth token",
             "schema": {
-              "$ref": "#/components/schemas/updateResponse"
+              "$ref": "#/components/schemas/userResponse"
             }
           },
           "400": {
-            "description": "bad request",
+            "description": "The email already exists",
             "schema": {
-              "$ref": "#/components/schemas/inputError"
-            }
-          },
-          "401": {
-            "description": "unauthorized",
-            "schema": {
-              "$ref": "#/components/schemas/authError"
+              "$ref": "#/components/schemas/userError"
             }
           }
         }
@@ -206,6 +162,54 @@
             "description": "access_token is required",
             "schema": {
               "$ref": "#/components/schemas/facebookError"
+            }
+          }
+        }
+      }
+    },
+    "/customers/profile": {
+      "put": {
+        "tags": ["Customers"],
+        "summary": "update customer profile data",
+        "description": "update customer profile data such as name, email, day_phone, eve_phone and mob_phone",
+        "operationId": "updateCustomerProfile",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "USER_KEY",
+            "in": "header",
+            "description": "user authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user object",
+            "in": "body",
+            "description": "user object to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/profileData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new user object",
+            "schema": {
+              "$ref": "#/components/schemas/updateResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
             }
           }
         }
@@ -361,10 +365,10 @@
         }
       }
     },
-    "/departments/{id}": {
+    "/departments/{department_id}": {
       "get": {
         "tags": ["Departments"],
-        "summary": "Get a department",
+        "summary": "Get a department by ID",
         "description": "Get one department by the department ID",
         "operationId": "getOneDepartment",
         "produces": ["application/json"],
@@ -373,6 +377,97 @@
             "description": "An object of department",
             "schema": {
               "$ref": "#/components/schemas/departmentResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a new category",
+        "description": "Create a new category",
+        "operationId": "create",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The category object to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newCategory"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "new category create",
+            "schema": {
+              "$ref": "#/components/schemas/categoryResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "description": "Get all categories",
+        "operationId": "getAllCategories",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An array of categories",
+            "schema": {
+              "$ref": "#/components/schemas/allCategoriesResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category_id}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get a category by ID",
+        "description": "Get one category by the category ID",
+        "operationId": "getCategoryById",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An object of category",
+            "schema": {
+              "$ref": "#/components/schemas/categoryResponse"
             }
           },
           "400": {
@@ -506,6 +601,24 @@
         "description": {
           "type": "string",
           "example": "new description"
+        }
+      }
+    },
+    "newCategory": {
+      "type": "object",
+      "required": ["name", "department_id"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "new category"
+        },
+        "description": {
+          "type": "string",
+          "example": "new category"
+        },
+        "department_id": {
+          "type": "integer",
+          "example": 1
         }
       }
     }
@@ -778,6 +891,33 @@
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/departmentResponse"
+        }
+      },
+      "categoryResponse": {
+        "type": "object",
+        "properties": {
+          "category_id": {
+            "type": "interger",
+            "example": 1
+          },
+          "department_id": {
+            "type": "interger",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "new category"
+          },
+          "description": {
+            "type": "string",
+            "example": "new description"
+          }
+        }
+      },
+      "allCategoriesResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/categoryResponse"
         }
       },
       "notFoundResponse": {
