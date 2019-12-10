@@ -66,14 +66,27 @@ export default class CategoryController {
     try {
       const { category_id } = req.params;
       const category = await CategoryService.getCategoryById(category_id);
-      if (isEmpty(category)) {
-        const options = {
-          errorCode: 'CAT_02',
-          message: `Does not exist category with ID ${category_id}`,
-        };
-        return http.httpErrorResponse(res, options, 404);
-      }
       return http.httpSingleRecordResponse(req, res, category.dataValues, 200);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Get product categories
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {array} JSON array of product categories
+   * @memberof CategoryController
+   */
+  static async getProductCategories(req, res, next) {
+    try {
+      const { product_id } = req.params;
+      const productCategories = await CategoryService.getProductCategories(product_id);
+      return http.httpCollectionRecordResponse(req, res, productCategories, 200);
     } catch (error) {
       next(error);
     }
