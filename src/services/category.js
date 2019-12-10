@@ -1,7 +1,7 @@
 import models from '../database/models';
 import BaseService from './base';
 
-const { Category, ProductCategory, Product } = models;
+const { Category, Department, Product } = models;
 
 /**
  * @class CategoryService
@@ -44,14 +44,45 @@ export default class CategoryService extends BaseService {
   static async getProductCategories(product_id) {
     const product = await this.findByPk(Product, product_id);
     const categories = await product.getCategories();
-    const productCategories = categories.reduce((acc, category) => {
-      acc.push({
-        category_id: category.category_id,
-        name: category.name,
-        department_id: category.department_id,
-      });
+    return CategoryService.prepareModelCategories(categories, 'product');
+  }
+
+  /**
+   * @description This service fetches a list of categories of a Department
+   *
+   * @returns {object} Return a Object of all the department categories
+   */
+  static async getDepartmentCategories(department_id) {
+    const department = await this.findByPk(Department, department_id);
+    const categories = await department.getCategories();
+    return CategoryService.prepareModelCategories(categories, 'department')
+  }
+
+  /**
+   * @description This method prepares the categories to be returned
+   *
+   * @param {array} categories Array of model categories
+   * @param {string} flag Indicates the model whose categories is been checked
+   * @returns {array} Array of model categories
+   */
+  static prepareModelCategories(categories, flag) {
+    const modelCategories = categories.reduce((acc, category) => {
+      if (flag === 'product') {
+        acc.push({
+          category_id: category.category_id,
+          department_id: category.department_id,
+          name: category.name,
+        });
+      } else {
+        acc.push({
+          category_id: category.category_id,
+          name: category.name,
+          description: category.description,
+          department_id: category.department_id,
+        });
+      }
       return acc;
     }, []);
-    return productCategories;
+    return modelCategories
   }
 }

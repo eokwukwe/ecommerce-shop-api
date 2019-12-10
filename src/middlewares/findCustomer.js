@@ -11,7 +11,7 @@ export default async (req, res, next) => {
 		if (isEmpty(customer)) {
 			const options = {
 				errorCode: 'USR_05',
-				message: 'Customer not found',
+				message: `Does not exist customer with ID ${customer_id}`,
 				field: 'customer_id',
 			};
 			return http.httpErrorResponse(res, options, 404);

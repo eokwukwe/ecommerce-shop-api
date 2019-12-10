@@ -4,6 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import app, { server } from '../..';
+import Authentication from '../../middlewares/authentication';
 
 const mock = new MockAdapter(axios);
 const baseUrl = '/api/v1/customers';
@@ -55,7 +56,7 @@ describe('customer controller', () => {
         region: 'Europe',
         postal_code: '112340',
         country: 'Itay',
-        shipping_region_id: '1',
+        shipping_region_id: 1,
       };
       const response = await request(app)
         .put(`${baseUrl}/address`)
@@ -69,13 +70,43 @@ describe('customer controller', () => {
         region: 'Europe',
         postal_code: '112340',
         country: '',
-        shipping_region_id: '1',
+        shipping_region_id: 1,
       };
       const response = await request(app)
         .put(`${baseUrl}/address`)
         .set({ USER_KEY: token })
         .send(addressUpdate);
       expect(response.statusCode).toBe(400);
+    });
+    it('should return a status of 404 if user does not exist', async () => {
+      const addressUpdate = {
+        address_1: '1sango road',
+        city: 'Yaba',
+        region: 'Europe',
+        postal_code: '112340',
+        country: '',
+        shipping_region_id: 1,
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/address`)
+        .set({ USER_KEY: `Bearer ${Authentication.generateToken(100)}` })
+        .send(addressUpdate);
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return a status of 404 if shipping region is not found', async () => {
+      const addressUpdate = {
+        address_1: '1sango road',
+        city: 'Yaba',
+        region: 'Europe',
+        postal_code: '112340',
+        country: 'country',
+        shipping_region_id: 10,
+      };
+      const response = await request(app)
+        .put(`${baseUrl}/address`)
+        .set({ USER_KEY: token })
+        .send(addressUpdate);
+      expect(response.statusCode).toBe(404);
     });
     it('should return a status of 200 for a successful address update', async () => {
       const addressUpdate = {

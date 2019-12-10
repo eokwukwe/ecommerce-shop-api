@@ -91,4 +91,24 @@ export default class CategoryController {
       next(error);
     }
   }
+
+  /**
+   * Get department categories
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {array} JSON array of department categories
+   * @memberof CategoryController
+   */
+  static async getDepartmentCategories(req, res, next) {
+    try {
+      const { department_id } = req.params;
+      const departmentCategories = await CategoryService.getDepartmentCategories(department_id);
+      return http.httpCollectionRecordResponse(req, res, departmentCategories, 200);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
