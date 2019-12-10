@@ -5,7 +5,7 @@ import http from '../helpers/http';
 
 const { ShippingRegion } = models;
 
-export const findShippingRegion = async (req, res, next) => {
+export default async (req, res, next) => {
 	const regionId = parseInt(req.body.shipping_region_id, 10);
 	const shippingRegion = await ShippingRegion.findByPk(regionId);
 	if (isEmpty(shippingRegion)) {

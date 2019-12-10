@@ -1,11 +1,14 @@
 import { Router } from 'express';
 
+import {
+  checkAdmin,
+  validateInput,
+  Authentication,
+  validateIdParams,
+  checkRecordExists,
+  checkUniqueRecord,
+} from '../../middlewares';
 import models from '../../database/models';
-import checkAdmin from '../../middlewares/checkAdmin';
-import validateInput from '../../middlewares/validateInput';
-import Authentication from '../../middlewares/authentication';
-import validateIdParams from '../../middlewares/validateIdParams';
-import checkUniqueRecord from '../../middlewares/checkUniqueRecord';
 import DepartmentController from '../../controllers/department.controller';
 
 const router = Router();
@@ -25,7 +28,8 @@ router.get('/departments', DepartmentController.getAllDepartments);
 router.get(
   '/departments/:department_id',
   validateIdParams,
-  DepartmentController.getOneDepartment
+  checkRecordExists(Department),
+  DepartmentController.getDepartmentById
 );
 
 export default router;

@@ -1,13 +1,15 @@
 import { Router } from 'express';
 
+import {
+  checkAdmin,
+  validateInput,
+  Authentication,
+  validateIdParams,
+  checkRecordExists,
+  checkUniqueRecord,
+  checkForDepartment,
+} from '../../middlewares';
 import model from '../../database/models';
-import checkAdmin from '../../middlewares/checkAdmin';
-import validateInput from '../../middlewares/validateInput';
-import Authentication from '../../middlewares/authentication';
-import validateIdParams from '../../middlewares/validateIdParams';
-import checkRecordExists from '../../middlewares/checkRecordExists';
-import checkUniqueRecord from '../../middlewares/checkUniqueRecord';
-import checkForDepartment from '../../middlewares/checkForDepartment';
 import CategoryController from '../../controllers/category.controller';
 
 const router = Router();

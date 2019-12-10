@@ -61,17 +61,10 @@ export default class DepartmentController {
    * @returns {object} JSON Object of department
    * @memberof DepartmentController
    */
-  static async getOneDepartment(req, res, next) {
+  static async getDepartmentById(req, res, next) {
     const { department_id } = req.params;
     try {
       const department = await DepartmentService.getDepartmentById(department_id);
-      if (isEmpty(department)) {
-        const options = {
-          errorCode: 'DEP_02',
-          message: `Does not exist department with ID ${department_id}`,
-        };
-        return http.httpErrorResponse(res, options, 404);
-      }
       return http.httpSingleRecordResponse(req, res, department.dataValues, 200);
     } catch (error) {
       next(error);
