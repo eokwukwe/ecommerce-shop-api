@@ -13,7 +13,7 @@ import model from '../../database/models';
 import CategoryController from '../../controllers/category.controller';
 
 const router = Router();
-const { Category, Product } = model;
+const { Category, Product, Department } = model;
 
 router.post(
   '/categories',
@@ -42,6 +42,13 @@ router.get(
   validateIdParams,
   checkRecordExists(Product),
   CategoryController.getProductCategories
+);
+
+router.get(
+  '/categories/inDepartment/:department_id',
+  validateIdParams,
+  checkRecordExists(Department),
+  CategoryController.getDepartmentCategories
 );
 
 export default router;

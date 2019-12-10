@@ -99,6 +99,23 @@ describe('category controller', () => {
     });
     it('should return 200 with an array of product categories', async () => {
       const response = await request(app).get(`${baseUrl}/inProduct/1`);
+      console.log('>>>>>>>>>>', response.body);
+      
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe('Get department categories by ID', () => {
+    it('should return 400 if the ID is not a number', async () => {
+      const response = await request(app).get(`${baseUrl}/inDepartment/ab`);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if the department does not exist', async () => {
+      const response = await request(app).get(`${baseUrl}/inDepartment/1000`);
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 200 with an array of department categories', async () => {
+      const response = await request(app).get(`${baseUrl}/inDepartment/1`);
       expect(response.statusCode).toBe(200);
     });
   });
