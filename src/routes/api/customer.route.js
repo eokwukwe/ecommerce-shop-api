@@ -1,10 +1,13 @@
 import { Router } from 'express';
+
 import CustomerController from '../../controllers/customer.controller';
-import checkUniqueEmail from '../../middlewares/checkUniqueEmail';
-import findCustomer from '../../middlewares/findCustomer';
-import Authentication from '../../middlewares/authentication';
-import validateInput from '../../middlewares/validateInput';
-import { findShippingRegion } from '../../middlewares/findShipping';
+import {
+  findCustomer,
+  validateInput,
+  Authentication,
+  checkUniqueEmail,
+  findShippingRegion,
+} from '../../middlewares'
 
 const router = Router();
 router.post(
