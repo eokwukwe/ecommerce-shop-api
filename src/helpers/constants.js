@@ -1,4 +1,4 @@
-const uniqueErrorCodes = {
+const uniqueRecordErrorCodes = {
   Category: 'CAT_03',
   Department: 'DEP_03',
 };
@@ -9,4 +9,4 @@ const notFoundErrorCodes = {
   Product: 'PRD_02',
 };
 
-export { uniqueErrorCodes, notFoundErrorCodes };
+export { uniqueRecordErrorCodes, notFoundErrorCodes };
