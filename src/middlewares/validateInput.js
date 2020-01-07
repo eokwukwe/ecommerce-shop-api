@@ -7,6 +7,7 @@ import {
   departmentSchema,
   updateProfileSchema,
   updateAddressSchema,
+  attributeValueSchema,
   updateCreditCardSchema,
   facebookAccessTokenSchema,
 } from '../validations/schemas/schemas';
@@ -24,6 +25,7 @@ const getSchema = req => {
     '/categories': categorySchema,
     '/attributes': attributeSchema,
     '/address': updateAddressSchema,
+    '/values': attributeValueSchema,
     '/profile': updateProfileSchema,
     '/departments': departmentSchema,
     '/creditCard': updateCreditCardSchema,

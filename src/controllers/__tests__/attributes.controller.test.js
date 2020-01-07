@@ -12,9 +12,10 @@ describe('category controller', () => {
     done();
   });
 
+  const adminToken = `Bearer ${Authentication.generateToken(1)}`;
+  const token = `Bearer ${Authentication.generateToken(2)}`;
+
   describe('Create a new attribute', () => {
-    const adminToken = `Bearer ${Authentication.generateToken(1)}`;
-    const token = `Bearer ${Authentication.generateToken(2)}`;
     it('should return 401 if no token is provided', async () => {
       const response = await request(app)
         .post(baseUrl)
@@ -53,6 +54,54 @@ describe('category controller', () => {
         .set({ USER_KEY: adminToken })
         .send({ name: 'width' });
       expect(response.statusCode).toBe(400);
+    });
+  });
+
+  describe('Add attribute values', () => {
+    it('should return 401 if no token is provided', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/1/values`)
+        .send({
+          value: 'green',
+        });
+      expect(response.statusCode).toBe(401);
+    });
+    it('should return 401 if user is not an admin', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/1/values`)
+        .set({ USER_KEY: token })
+        .send({
+          value: 'green',
+        });
+      expect(response.statusCode).toBe(401);
+    });
+    it('should return 400 for invalid input', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/1/values`)
+        .set({ USER_KEY: adminToken })
+        .send({ value: '' });
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 400 for invalid attribute_id', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/'1'/values`)
+        .set({ USER_KEY: adminToken })
+        .send({ value: 'green' });
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if the attribute does not exist', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/10/values`)
+        .set({ USER_KEY: adminToken })
+        .send({ value: 'green' });
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 201 for successfully add attribute values to an attribute', async () => {
+      const response = await request(app)
+        .post(`${baseUrl}/2/values`)
+        .set({ USER_KEY: adminToken })
+        .send({ value: 'green' });
+      expect(response.statusCode).toBe(201);
     });
   });
 });

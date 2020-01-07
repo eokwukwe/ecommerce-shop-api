@@ -17,4 +17,16 @@ export default class AttributeService extends BaseService {
     const attribute = await this.create(Attribute, payload);
     return attribute.dataValues;
   }
+
+  /**
+   * @description This method add a new attribute value
+   *
+   * @param {object} payload AttributeValue data
+   * @returns {void} 
+   */
+  static async addAttributeValue(payload) {
+    const {attribute_id, value} = payload
+    const attribute = await this.findByPk(Attribute, attribute_id);
+    return await attribute.createAttributeValue({attribute_id, value});
+  }
 }
