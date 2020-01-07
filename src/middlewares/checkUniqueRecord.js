@@ -1,6 +1,6 @@
 import isEmpty from 'lodash.isempty';
 import http from '../helpers/http';
-import { uniqueErrorCodes } from '../helpers/constants';
+import { uniqueRecordErrorCodes } from '../helpers/constants';
 
 /**
  * @description - Middleware to validate database unique constraints
@@ -18,7 +18,7 @@ export default model => {
       if (!isEmpty(result)) {
         const modelName = result._modelOptions.name.singular;
         const options = {
-          errorCode: uniqueErrorCodes[modelName],
+          errorCode: uniqueRecordErrorCodes[modelName],
           message: `${modelName} '${req.body.name}' already exists`,
           field: modelName.toLowerCase(),
         };

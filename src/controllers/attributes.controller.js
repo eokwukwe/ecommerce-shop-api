@@ -1,16 +1,33 @@
+import http from '../helpers/http';
+import AttributeService from '../services/attribute';
+
 /**
- * The controller defined below is the attribute controller, highlighted below are the functions of each static method
- * in the controller
- *  Some methods needs to be implemented from scratch while others may contain one or two bugs
- * 
+ * - create - This method should create a new attribute and attributeValues recored
  * - getAllAttributes - This method should return an array of all attributes
  * - getSingleAttribute - This method should return a single attribute using the attribute_id in the request parameter
  * - getAttributeValues - This method should return an array of all attribute values of a single attribute using the attribute id
  * - getProductAttributes - This method should return an array of all the product attributes
- * NB: Check the BACKEND CHALLENGE TEMPLATE DOCUMENTATION in the readme of this repository to see our recommended
- *  endpoints, request body/param, and response object for each of these method
  */
 class AttributeController {
+  /**
+   * create a new attribute record
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} JSON Object of created attribute
+   * @memberof AttributeController
+   */
+  static async create(req, res, next) {
+    try {
+      const newAttribute = await AttributeService.createAttribute(req.body);
+      return http.httpSingleRecordResponse(req, res, newAttribute, 201);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   /**
    * This method get all attributes
    * @param {*} req

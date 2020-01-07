@@ -99,6 +99,11 @@ const description = Joi.string()
   .strict()
   .label('description');
 
+const value = Joi.string()
+  .required()
+  .min(1)
+  .label('value');
+
 export const signUpSchema = Joi.object().keys({
   name,
   email,
@@ -145,4 +150,8 @@ export const categorySchema = Joi.object().keys({
   name,
   department_id,
   description
+});
+
+export const attributeSchema = Joi.object().keys({
+  name
 });
