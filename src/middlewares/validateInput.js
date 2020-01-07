@@ -1,13 +1,14 @@
 import { validator } from '../validations/validator';
 import {
-  signUpSchema,
   loginSchema,
-  facebookAccessTokenSchema,
-  updateAddressSchema,
-  updateProfileSchema,
-  updateCreditCardSchema,
+  signUpSchema,
+  categorySchema,
+  attributeSchema,
   departmentSchema,
-  categorySchema
+  updateProfileSchema,
+  updateAddressSchema,
+  updateCreditCardSchema,
+  facebookAccessTokenSchema,
 } from '../validations/schemas/schemas';
 
 /**
@@ -18,14 +19,15 @@ import {
  */
 const getSchema = req => {
   const schema = {
-    '/customers': signUpSchema,
     '/login': loginSchema,
-    '/facebook': facebookAccessTokenSchema,
+    '/customers': signUpSchema,
+    '/categories': categorySchema,
+    '/attributes': attributeSchema,
     '/address': updateAddressSchema,
     '/profile': updateProfileSchema,
-    '/creditCard': updateCreditCardSchema,
     '/departments': departmentSchema,
-    '/categories': categorySchema
+    '/creditCard': updateCreditCardSchema,
+    '/facebook': facebookAccessTokenSchema,
   };
   const path = req.originalUrl.split('/').pop();
   return schema[`/${path}`];
