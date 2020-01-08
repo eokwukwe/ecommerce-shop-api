@@ -21,7 +21,7 @@ export default class CategoryService extends BaseService {
   /**
    * @description This service fetches all category
    *
-   * @returns {object} Return a Object of created category
+   * @returns {array} Return a array of categories
    */
   static async getCategories() {
     return await this.findAll(Category);

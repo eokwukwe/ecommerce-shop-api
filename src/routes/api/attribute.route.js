@@ -33,7 +33,7 @@ router.post(
   AttributeController.addAttributeValue
 );
 
-// router.get('/attributes', AttributeController.getAllAttributes);
+router.get('/attributes', AttributeController.getAllAttributes);
 // router.get('/attributes/:attribute_id', AttributeController.getSingleAttribute);
 // router.get('/attributes/:attribute_id/values', AttributeController.getAttributeValues);
 // router.get('/attributes/inProduct/:product_id', AttributeController.getProductAttributes);

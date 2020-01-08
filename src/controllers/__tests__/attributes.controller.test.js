@@ -104,4 +104,11 @@ describe('category controller', () => {
       expect(response.statusCode).toBe(201);
     });
   });
+
+   describe('Get all categories', () => {
+     it('should return 200 for successful attributes fetch', async () => {
+       const response = await request(app).get(baseUrl);
+       expect(response.statusCode).toBe(200);
+     });
+   });
 });
