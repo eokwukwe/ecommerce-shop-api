@@ -662,6 +662,12 @@
               "$ref": "#/components/schemas/allAttributeValuesResponse"
             }
           },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
           "404": {
             "description": "not found",
             "schema": {
@@ -683,6 +689,35 @@
             "description": "An object of atrribute",
             "schema": {
               "$ref": "#/components/schemas/attributeResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
+      }
+    },
+    "/attributes/inProduct/{product_id}": {
+      "get": {
+        "tags": ["Attributes"],
+        "summary": "Return a list of product attributes",
+        "description": "Return a list of product attributes",
+        "operationId": "getProductAttributes",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Return a list of Attribute Values",
+            "schema": {
+              "$ref": "#/components/schemas/allProductAttributesResponse"
             }
           },
           "400": {
@@ -1166,6 +1201,23 @@
           }
         }
       },
+      "productAttributes": {
+        "type": "object",
+        "properties": {
+          "attribute_name": {
+            "type": "string",
+            "example": "Size"
+          },
+          "attribute_value_id": {
+            "type": "interger",
+            "example": 1
+          },
+          "attribute_value": {
+            "type": "string",
+            "example": "S"
+          }
+        }
+      },
       "allCategoriesResponse": {
         "type": "array",
         "items": {
@@ -1229,6 +1281,12 @@
           "$ref": "#/components/schemas/attributeValuesResponse"
         }
       },
+      "allProductAttributesResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/productAttributes"
+        }
+      },
       "notFoundResponse": {
         "type": "object",
         "properties": {
@@ -1255,7 +1313,7 @@
           },
           "message": {
             "type": "string",
-            "example": "The ID is not a number"
+            "example": "The resource ID must be a number"
           },
           "status": {
             "type": "integer",
