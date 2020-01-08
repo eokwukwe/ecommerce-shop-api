@@ -100,14 +100,24 @@ class AttributeController {
 
   /**
    * This method gets a list attribute values in an attribute using the attribute id
-   * @param {*} req
-   * @param {*} res
-   * @param {*} next
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} JSON server response
+   * @memberof AttributeController
    */
   static async getAttributeValues(req, res, next) {
-    // Write code to get all attribute values for an attribute using the attribute id provided in the request param
-    // This function takes the param: attribute_id
-    return res.status(200).json({ message: 'this works' });
+    try {
+      return http.httpCollectionRecordResponse(
+        req,
+        res,
+        await AttributeService.getAttributeValues(req.params.attribute_id)
+      );
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**

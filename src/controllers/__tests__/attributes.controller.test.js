@@ -126,4 +126,19 @@ describe('category controller', () => {
       expect(response.statusCode).toBe(200);
     });
   });
+
+  describe('Get all the values of an attribute ', () => {
+    it('should return 400 if the ID is not a number', async () => {
+      const response = await request(app).get(`${baseUrl}/ab/values`);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if the attribute does not exist', async () => {
+      const response = await request(app).get(`${baseUrl}/10/values`);
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 200 with an array of attribute values', async () => {
+      const response = await request(app).get(`${baseUrl}/1/values`);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });
