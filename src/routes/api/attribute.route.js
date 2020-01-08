@@ -12,7 +12,7 @@ import model from '../../database/models';
 import AttributeController from '../../controllers/attributes.controller';
 
 const router = Router();
-const { Attribute} = model;
+const { Attribute, Product } = model;
 
 router.post(
   '/attributes',
@@ -33,10 +33,7 @@ router.post(
   AttributeController.addAttributeValue
 );
 
-router.get(
-  '/attributes',
-  AttributeController.getAllAttributes
-);
+router.get('/attributes', AttributeController.getAllAttributes);
 
 router.get(
   '/attributes/:attribute_id',
@@ -52,6 +49,11 @@ router.get(
   AttributeController.getAttributeValues
 );
 
-// router.get('/attributes/inProduct/:product_id', AttributeController.getProductAttributes);
+router.get(
+  '/attributes/inProduct/:product_id',
+  validateIdParams,
+  checkRecordExists(Product),
+  AttributeController.getProductAttributes
+);
 
 export default router;

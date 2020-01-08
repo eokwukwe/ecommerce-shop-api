@@ -122,13 +122,21 @@ class AttributeController {
 
   /**
    * This method gets a list attribute values in a product using the product id
-   * @param {*} req
-   * @param {*} res
-   * @param {*} next
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} JSON server response
+   * @memberof AttributeController
    */
   static async getProductAttributes(req, res, next) {
-    // Write code to get all attribute values for a product using the product id provided in the request param
-    return res.status(200).json({ message: 'this works' });
+    try {
+      const productAttributes = await AttributeService.getProductAttributes(req.params.product_id);
+      return http.httpCollectionRecordResponse(req, res, productAttributes);
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
