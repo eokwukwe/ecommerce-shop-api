@@ -30,7 +30,7 @@ export default class CategoryService extends BaseService {
   /**
    * @description This service fetches a category by Id
    *
-   * @returns {object} Return a Object of created category
+   * @returns {object} Return an object of a category
    */
   static async getCategoryById(category_id) {
     return await this.findByPk(Category, category_id);
