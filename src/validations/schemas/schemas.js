@@ -155,3 +155,7 @@ export const categorySchema = Joi.object().keys({
 export const attributeSchema = Joi.object().keys({
   name
 });
+
+export const attributeValueSchema = Joi.object().keys({
+  value
+});

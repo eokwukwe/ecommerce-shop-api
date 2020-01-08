@@ -27,6 +27,10 @@
     {
       "name": "Categories",
       "description": "Everything about category"
+    },
+    {
+      "name": "Attributes",
+      "description": "Everything about attribute"
     }
   ],
   "schemes": ["https", "http"],
@@ -484,6 +488,146 @@
           }
         }
       }
+    },
+    "/categories/inProduct/{category_id}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get categories of a Product",
+        "description": "Get categories of a Product",
+        "operationId": "getProductCategories",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An array of categories",
+            "schema": {
+              "$ref": "#/components/schemas/productCategoriesResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
+      }
+    },
+    "/categories/inDepartment/{category_id}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get categories of a Department",
+        "description": "Get categories of a Department",
+        "operationId": "getDepartmentCategories",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An array of categories",
+            "schema": {
+              "$ref": "#/components/schemas/allCategoriesResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
+      }
+    },
+    "/attributes": {
+      "post": {
+        "tags": ["Attributes"],
+        "summary": "Create a new attribute",
+        "description": "Create a new attribute",
+        "operationId": "create",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The attribute object to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newAttribute"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "new category create",
+            "schema": {
+              "$ref": "#/components/schemas/attributeResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
+    },
+    "/attributes/{attribute_id}/values": {
+      "post": {
+        "tags": ["Attributes"],
+        "summary": "Add a new value to an existing attribute",
+        "description": "Add a new attribute value to an existing attribute",
+        "operationId": "addAttributeValue",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The attribute value object to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newAttributeValue"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "success message",
+            "schema": {
+              "$ref": "#/components/schemas/attributeValueResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -619,6 +763,26 @@
         "department_id": {
           "type": "integer",
           "example": 1
+        }
+      }
+    },
+    "newAttribute": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Width"
+        }
+      }
+    },
+    "newAttributeValue": {
+      "type": "object",
+      "required": ["value"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "Wide"
         }
       }
     }
@@ -900,6 +1064,27 @@
             "type": "interger",
             "example": 1
           },
+          "name": {
+            "type": "string",
+            "example": "new category"
+          },
+          "description": {
+            "type": "string",
+            "example": "The French have always had an eye for beauty. One look at the T-shirts below and you'll see that same appreciation has been applied abundantly to their postage stamps."
+          },
+          "department_id": {
+            "type": "interger",
+            "example": 1
+          }
+        }
+      },
+      "productCategories": {
+        "type": "object",
+        "properties": {
+          "category_id": {
+            "type": "interger",
+            "example": 1
+          },
           "department_id": {
             "type": "interger",
             "example": 1
@@ -907,10 +1092,6 @@
           "name": {
             "type": "string",
             "example": "new category"
-          },
-          "description": {
-            "type": "string",
-            "example": "new description"
           }
         }
       },
@@ -918,6 +1099,38 @@
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/categoryResponse"
+        }
+      },
+      "productCategoriesResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/productCategories"
+        }
+      },
+      "attributeResponse": {
+        "type": "object",
+        "properties": {
+          "attribute_id": {
+            "type": "interger",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Width"
+          }
+        }
+      },
+      "attributeValueResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "interger",
+            "example": 201
+          },
+          "message": {
+            "type": "string",
+            "example": "Attribute value added successfully"
+          }
         }
       },
       "notFoundResponse": {

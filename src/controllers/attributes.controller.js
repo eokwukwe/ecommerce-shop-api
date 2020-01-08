@@ -29,6 +29,34 @@ class AttributeController {
   }
 
   /**
+   * add an attribute value
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} JSON server response
+   * @memberof AttributeController
+   */
+  static async addAttributeValue(req, res, next) {
+    const {
+      body: { value },
+      params: { attribute_id },
+    } = req;
+    try {
+      await AttributeService.addAttributeValue({ value, attribute_id });
+      return http.httpSingleRecordResponse(
+        req,
+        res,
+        { status: 201, message: 'Attribute value added successfully' },
+        201
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
    * This method get all attributes
    * @param {*} req
    * @param {*} res
