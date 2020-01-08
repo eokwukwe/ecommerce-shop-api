@@ -66,7 +66,7 @@ describe('category controller', () => {
     });
   });
 
-  describe(' all categories', () => {
+  describe('Get all categories', () => {
     it('should return 200 for successful categories fetch', async () => {
       const response = await request(app).get(baseUrl);
       expect(response.statusCode).toBe(200);
@@ -99,8 +99,6 @@ describe('category controller', () => {
     });
     it('should return 200 with an array of product categories', async () => {
       const response = await request(app).get(`${baseUrl}/inProduct/1`);
-      console.log('>>>>>>>>>>', response.body);
-      
       expect(response.statusCode).toBe(200);
     });
   });

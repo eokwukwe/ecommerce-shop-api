@@ -58,13 +58,21 @@ class AttributeController {
 
   /**
    * This method get all attributes
-   * @param {*} req
-   * @param {*} res
-   * @param {*} next
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} JSON server response
+   * @memberof AttributeController
    */
   static async getAllAttributes(req, res, next) {
-    // write code to get all attributes from the database here
-    return res.status(200).json({ message: 'this works' });
+    try {
+      const attributes = await AttributeService.getAllAttributes();
+      return http.httpCollectionRecordResponse(req, res, attributes);
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**
