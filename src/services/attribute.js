@@ -38,4 +38,14 @@ export default class AttributeService extends BaseService {
   static async getAllAttributes() {
     return this.findAll(Attribute);
   }
+
+  /**
+   * @description This method gets a single attribute using the attribute id
+   *
+   * @returns {object} Return an object of an attribute
+   */
+  static async getAttributeById(attribute_id) {
+    const attribute = await this.findByPk(Attribute, attribute_id);
+    return attribute.dataValues;
+  }
 }

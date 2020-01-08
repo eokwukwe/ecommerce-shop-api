@@ -586,6 +586,31 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Attributes"
+        ],
+        "summary": "Get all attributes",
+        "description": "Get all attributes",
+        "operationId": "getAllAttributes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of attributes",
+            "schema": {
+              "$ref": "#/components/schemas/allAttributesResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
+            }
+          }
+        }
       }
     },
     "/attributes/{attribute_id}/values": {
@@ -624,6 +649,35 @@
             "description": "unauthorized",
             "schema": {
               "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
+    },
+    "/attributes/{attribute_id}": {
+      "get": {
+        "tags": ["Attributes"],
+        "summary": "Get a single attribute by the attribute ID",
+        "description": "Get a single attribute by the attribute ID",
+        "operationId": "getSingleAttribute",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "An object of atrribute",
+            "schema": {
+              "$ref": "#/components/schemas/attributeResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/invalidIdResponse"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/components/schemas/notFoundResponse"
             }
           }
         }
@@ -1133,6 +1187,12 @@
           }
         }
       },
+        "allAttributesResponse": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/attributeResponse"
+          }
+        },
       "notFoundResponse": {
         "type": "object",
         "properties": {

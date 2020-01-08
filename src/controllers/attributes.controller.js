@@ -77,13 +77,25 @@ class AttributeController {
 
   /**
    * This method gets a single attribute using the attribute id
-   * @param {*} req
-   * @param {*} res
-   * @param {*} next
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {object} next next middleware
+   * @returns {json} JSON server response
+   * @memberof AttributeController
    */
   static async getSingleAttribute(req, res, next) {
-    // Write code to get a single attribute using the attribute id provided in the request param
-    return res.status(200).json({ message: 'this works' });
+    const { attribute_id } = req.params;
+    try {
+      return http.httpSingleRecordResponse(
+        req,
+        res,
+        await AttributeService.getAttributeById(attribute_id)
+      );
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**

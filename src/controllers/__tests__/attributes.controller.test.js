@@ -105,10 +105,25 @@ describe('category controller', () => {
     });
   });
 
-   describe('Get all categories', () => {
-     it('should return 200 for successful attributes fetch', async () => {
-       const response = await request(app).get(baseUrl);
-       expect(response.statusCode).toBe(200);
-     });
-   });
+  describe('Get all categories', () => {
+    it('should return 200 for successful attributes fetch', async () => {
+      const response = await request(app).get(baseUrl);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe('Get attibute by ID', () => {
+    it('should return 400 if the ID is not a number', async () => {
+      const response = await request(app).get(`${baseUrl}/ab`);
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if the attibute does not exist', async () => {
+      const response = await request(app).get(`${baseUrl}/100`);
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 200 if the attibute exists', async () => {
+      const response = await request(app).get(`${baseUrl}/1`);
+      expect(response.statusCode).toBe(200);
+    });
+  });
 });
