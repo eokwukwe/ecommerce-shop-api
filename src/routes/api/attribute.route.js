@@ -45,7 +45,13 @@ router.get(
   AttributeController.getSingleAttribute
 );
 
-// router.get('/attributes/:attribute_id/values', AttributeController.getAttributeValues);
+router.get(
+  '/attributes/:attribute_id/values',
+  validateIdParams,
+  checkRecordExists(Attribute),
+  AttributeController.getAttributeValues
+);
+
 // router.get('/attributes/inProduct/:product_id', AttributeController.getProductAttributes);
 
 export default router;
