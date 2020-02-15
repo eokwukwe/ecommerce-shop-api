@@ -7,7 +7,7 @@ import {
   validateIdParams,
   checkRecordExists,
   checkUniqueRecord,
-  checkForDepartment,
+  checkRecordExitsFromBody
 } from '../../middlewares';
 import model from '../../database/models';
 import CategoryController from '../../controllers/category.controller';
@@ -21,7 +21,7 @@ router.post(
   checkAdmin,
   validateInput,
   checkUniqueRecord(Category),
-  checkForDepartment,
+  checkRecordExitsFromBody({id: 'department_id', model: Department}),
   CategoryController.create
 );
 

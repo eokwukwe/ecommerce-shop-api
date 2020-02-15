@@ -31,6 +31,10 @@
     {
       "name": "Attributes",
       "description": "Everything about attribute"
+    },
+    {
+      "name": "Products",
+      "description": "Everything about product"
     }
   ],
   "schemes": ["https", "http"],
@@ -734,6 +738,47 @@
           }
         }
       }
+    },
+    "/products": {
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create a new product",
+        "description": "Create a new product",
+        "operationId": "create",
+        "consumes": ["application/json", "application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The product object to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/newProduct"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "new product create",
+            "schema": {
+              "$ref": "#/components/schemas/productResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/components/schemas/inputError"
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "schema": {
+              "$ref": "#/components/schemas/authError"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -889,6 +934,63 @@
         "value": {
           "type": "string",
           "example": "Wide"
+        }
+      }
+    },
+    "newProduct": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "price",
+        "discounted_price",
+        "image",
+        "image_2",
+        "thumbnail",
+        "display",
+        "category_id",
+        "attribute_value_id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Wide Shirt"
+        },
+        "description": {
+          "type": "string",
+          "example": "a wonder shirt"
+        },
+        "price": {
+          "type": "float",
+          "example": 10.22
+        },
+        "discounted_price": {
+          "type": "float",
+          "example": 0.0
+        },
+        "image": {
+          "type": "string",
+          "example": "http://www.image.com"
+        },
+        "image_2": {
+          "type": "string",
+          "example": "http://www.image.com"
+        },
+        "thumbnail": {
+          "type": "string",
+          "example": "http://www.image.com"
+        },
+        "display": {
+          "type": "integer",
+          "example": 0
+        },
+        "category_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "attribute_value_id": {
+          "type": "integer",
+          "example": 2
         }
       }
     }
@@ -1240,6 +1342,43 @@
           "name": {
             "type": "string",
             "example": "Width"
+          }
+        }
+      },
+      "productResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Wide Shirt"
+          },
+          "description": {
+            "type": "string",
+            "example": "a wonder shirt"
+          },
+          "price": {
+            "type": "float",
+            "example": 10.22
+          },
+          "discounted_price": {
+            "type": "float",
+            "example": 0.0
+          },
+          "image": {
+            "type": "string",
+            "example": "http://www.image.com"
+          },
+          "image_2": {
+            "type": "string",
+            "example": "http://www.image.com"
+          },
+          "thumbnail": {
+            "type": "string",
+            "example": "http://www.image.com"
+          },
+          "display": {
+            "type": "integer",
+            "example": 0
           }
         }
       },

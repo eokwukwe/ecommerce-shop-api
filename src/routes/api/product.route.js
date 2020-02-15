@@ -1,18 +1,30 @@
 import { Router } from 'express';
+
+import {
+  checkAdmin,
+  validateInput,
+  Authentication,
+  validateIdParams,
+  checkRecordExists,
+  checkRecordExitsFromBody,
+  checkUniqueRecord,
+} from '../../middlewares';
+import model from '../../database/models';
 import ProductController from '../../controllers/product.controller';
 
-// These are valid routes but they may contain a bug, please try to define and fix them
-
 const router = Router();
-router.get('/products', ProductController.toString);
-router.get('/products/:product_id', ProductController.getProduct);
-router.get('/products/search', ProductController.searchProduct);
-router.get('/products/inCategory/:category_id', ProductController.getProductsByCategory);
-router.get('/products/inDepartment/:department_id', ProductController.getProductsByDepartment);
-router.get('/departments', ProductController.getAllDepartments);
-router.get('/departments/:department_id', ProductController.getDepartment);
-router.get('/categories', ProductController.getAllCategories);
-router.get('/categories/:category_id');
-router.get('/categories/inDepartment/:department_id', ProductController.getDepartmentCategories);
+const { Product, Category, AttributeValue } = model;
+
+router.post(
+  '/products',
+  Authentication.verifyToken,
+  checkAdmin,
+  validateInput,
+  checkUniqueRecord(Product),
+  checkRecordExitsFromBody({ id: 'category_id', model: Category }),
+  checkRecordExitsFromBody({ id: 'attribute_value_id', model: AttributeValue }),
+  ProductController.create
+);
 
 export default router;
+
