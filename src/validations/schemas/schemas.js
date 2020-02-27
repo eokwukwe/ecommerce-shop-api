@@ -55,15 +55,31 @@ const country = Joi.string()
 
 const shipping_region_id = Joi.number()
   .integer()
+  .positive()
   .required()
   .strict()
   .label('shipping_region_id');
 
 const department_id = Joi.number()
   .integer()
+  .positive()
   .required()
   .strict()
   .label('department_id');
+
+const category_id = Joi.number()
+  .integer()
+  .positive()
+  .required()
+  .strict()
+  .label('category_id');
+
+const attribute_value_id = Joi.number()
+  .integer()
+  .positive()
+  .required()
+  .strict()
+  .label('attribute_value_id');
 
 const access_token = Joi.string()
   .required()
@@ -104,6 +120,40 @@ const value = Joi.string()
   .min(1)
   .label('value');
 
+const price = Joi.number()
+  .precision(2)
+  .required()
+  .strict()
+  .label('price');
+
+const discounted_price = Joi.number()
+  .precision(2)
+  .required()
+  .strict()
+  .label('discounted_price');
+
+const display = Joi.number()
+  .integer()
+  .positive()
+  .required()
+  .strict()
+  .label('display');
+
+const image = Joi.string()
+  .uri()
+  .required()
+  .label('image');
+
+const image_2 = Joi.string()
+  .uri()
+  .required()
+  .label('image_2');
+
+const thumbnail = Joi.string()
+  .uri()
+  .required()
+  .label('thumbnail');
+
 export const signUpSchema = Joi.object().keys({
   name,
   email,
@@ -143,19 +193,32 @@ export const updateCreditCardSchema = Joi.object().keys({
 
 export const departmentSchema = Joi.object().keys({
   name,
-  description
+  description,
 });
 
 export const categorySchema = Joi.object().keys({
   name,
   department_id,
-  description
+  description,
 });
 
 export const attributeSchema = Joi.object().keys({
-  name
+  name,
 });
 
 export const attributeValueSchema = Joi.object().keys({
-  value
+  value,
+});
+
+export const productSchema = Joi.object().keys({
+  name,
+  description,
+  price,
+  discounted_price,
+  image,
+  image_2,
+  thumbnail,
+  display,
+  category_id,
+  attribute_value_id,
 });

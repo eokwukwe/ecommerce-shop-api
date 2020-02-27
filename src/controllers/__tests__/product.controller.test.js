@@ -1,107 +1,120 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-test('for the truth', () => {
-  expect(1 + 2).toEqual(3);
+import '@babel/polyfill';
+import request from 'supertest';
+
+import app, { server } from '../..';
+import Authentication from '../../middlewares/authentication';
+
+const baseUrl = '/api/v1/products';
+
+describe('product controller', () => {
+  afterAll(async done => {
+    server.close();
+    done();
+  });
+
+  const adminToken = `Bearer ${Authentication.generateToken(1)}`;
+  const token = `Bearer ${Authentication.generateToken(2)}`;
+
+  describe('Create a new product', () => {
+    it('should return 401 if no token is provided', async () => {
+      const response = await request(app).post(baseUrl);
+      expect(response.statusCode).toBe(401);
+    });
+    it('should return 401 if user is not an admin', async () => {
+      const response = await request(app)
+        .post(baseUrl)
+        .set({ USER_KEY: token });
+      expect(response.statusCode).toBe(401);
+    });
+    it('should return 400 for invalid input', async () => {
+      const response = await request(app)
+        .post(baseUrl)
+        .set({ USER_KEY: adminToken })
+        .send({
+          name: '',
+          description: '',
+          price: '',
+          discounted_price: '',
+          image: '',
+          image_2: '',
+          thumbnail: '',
+          display: '',
+          category_id: '',
+          attribute_value_id: '',
+        });
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 400 if product already exits', async () => {
+      const response = await request(app)
+        .post(baseUrl)
+        .set({ USER_KEY: adminToken })
+        .send({
+          name: 'Chartres Cathedral',
+          description: 'This is a description',
+          price: 10.22,
+          discounted_price: 0.0,
+          image: 'http://www.image.com',
+          image_2: 'http://www.image2.com',
+          thumbnail: 'http://www.thumbnail.com',
+          display: 2,
+          category_id: 1,
+          attribute_value_id: 1,
+        });
+      expect(response.statusCode).toBe(400);
+    });
+    it('should return 404 if category does not exits', async () => {
+      const response = await request(app)
+        .post(baseUrl)
+        .set({ USER_KEY: adminToken })
+        .send({
+          name: 'Chartres Cathedrall',
+          description: 'This is a description',
+          price: 10.22,
+          discounted_price: 0.0,
+          image: 'http://www.image.com',
+          image_2: 'http://www.image2.com',
+          thumbnail: 'http://www.thumbnail.com',
+          display: 2,
+          category_id: 1000,
+          attribute_value_id: 1,
+        });
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 404 if attribute value does not exits', async () => {
+      const response = await request(app)
+        .post(baseUrl)
+        .set({ USER_KEY: adminToken })
+        .send({
+          name: 'Chartres Cathedrall',
+          description: 'This is a description',
+          price: 10.22,
+          discounted_price: 0.0,
+          image: 'http://www.image.com',
+          image_2: 'http://www.image2.com',
+          thumbnail: 'http://www.thumbnail.com',
+          display: 2,
+          category_id: 1,
+          attribute_value_id: 100,
+        });
+      expect(response.statusCode).toBe(404);
+    });
+    it('should return 201 for successfully creating a new product', async () => {
+      const response = await request(app)
+        .post(baseUrl)
+        .set({ USER_KEY: adminToken })
+        .send({
+          name: 'Chartres Cathedrall',
+          description: 'This is a description',
+          price: 10.22,
+          discounted_price: 0.0,
+          image: 'http://www.image.com',
+          image_2: 'http://www.image2.com',
+          thumbnail: 'http://www.thumbnail.com',
+          display: 2,
+          category_id: 1,
+          attribute_value_id: 1,
+        });
+      expect(response.statusCode).toBe(201);
+    });
+  });
 });
-
-// import '@babel/polyfill';
-// import request from 'supertest';
-
-// import app, { server } from '../..';
-// import { Product, Department } from '../../database/models';
-// import truncate from '../../test/helpers';
-
-// describe('product controller', () => {
-//   let product;
-//   let department;
-//   beforeEach(async done => {
-//     await truncate();
-//     product = await Product.create({
-//       name: 'New T shirt',
-//       description: 'Simple T shirt',
-//       price: 14.99,
-//     });
-//     department = await Department.create({
-//       name: 'Groceries',
-//       description: 'Daily groceries',
-//     });
-//     done();
-//   });
-
-//   afterAll(async done => {
-//     server.close();
-//     done();
-//   });
-
-//   describe('getAllProducts', () => {
-//     it('should return a list of products', done => {
-//       request(app)
-//         .get('/products?page=3&search=the&limit=30')
-//         .set('Content-Type', 'application/json')
-//         .end((error, res) => {
-//           expect(res.status).toEqual(200);
-//           expect(typeof res.body).toHaveProperty('rows');
-//           expect(typeof res.body).toHaveProperty('pagination');
-//           done();
-//         });
-//     });
-//   });
-
-//   describe('getProduct', () => {
-//     it('should get the details of a product', done => {
-//       request(app)
-//         .get(`/products/${product.product_id}`)
-//         .set('Content-Type', 'application/json')
-//         .end((error, res) => {
-//           expect(res.status).toEqual(200);
-//           expect(res.body).toHaveProperty('product_id');
-//           done();
-//         });
-//     });
-
-//     it('should return appropriate status if product is not found', done => {
-//       request(app)
-//         .get('/products/999999')
-//         .set('Content-Type', 'application/json')
-//         .end((error, res) => {
-//           expect(res.status).toEqual(404);
-//           done();
-//         });
-//     });
-//   });
-
-//   describe('getAllDepartments', () => {
-//     it('should return a list of departments', done => {
-//       request(app)
-//         .get('/departments')
-//         .set('Content-Type', 'application/json')
-//         .end((error, res) => {
-//           expect(res.status).toEqual(200);
-//           expect(typeof res.body).toEqual('object');
-//           done();
-//         });
-//     });
-//   });
-
-//   describe('getDepartment', () => {
-//     it('should get the details of a department', done => {
-//       request(app)
-//         .get(`/departments/${department.department_id}`)
-//         .set('Content-Type', 'application/json')
-//         .end((error, res) => {
-//           expect(res.status).toEqual(200);
-//           expect(res.body).toHaveProperty('department_id');
-//           done();
-//         });
-//     });
-
-//     it('should return appropriate status if department is not found', done => {
-//       request(app)
-//         .get('/departments/999999')
-//         .set('Content-Type', 'application/json')
-//         .end((error, res) => {
-//           expect(res.status).toEqual(404);
-//           done();
-//         });
-//     });
-//   });
-// });

@@ -2,6 +2,7 @@ import { validator } from '../validations/validator';
 import {
   loginSchema,
   signUpSchema,
+  productSchema,
   categorySchema,
   attributeSchema,
   departmentSchema,
@@ -22,6 +23,7 @@ const getSchema = req => {
   const schema = {
     '/login': loginSchema,
     '/customers': signUpSchema,
+    '/products': productSchema,
     '/categories': categorySchema,
     '/attributes': attributeSchema,
     '/address': updateAddressSchema,

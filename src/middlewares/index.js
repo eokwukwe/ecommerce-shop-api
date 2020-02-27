@@ -5,10 +5,9 @@ import validateInput from './validateInput';
 import Authentication from './authentication';
 import checkUniqueEmail from './checkUniqueEmail';
 import validateIdParams from './validateIdParams';
-import checkRecordExists from './checkRecordExists';
 import checkUniqueRecord from './checkUniqueRecord';
 import findShippingRegion from './findShippingRegion';
-import checkForDepartment from './checkForDepartment';
+import checkRecordExists, { checkRecordExitsFromBody } from './checkRecordExists';
 
 export {
   checkAdmin,
@@ -21,5 +20,5 @@ export {
   checkRecordExists,
   checkUniqueRecord,
   findShippingRegion,
-  checkForDepartment,
+  checkRecordExitsFromBody,
 };
