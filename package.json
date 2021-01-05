@@ -29,7 +29,7 @@
     "@babel/polyfill": "^7.4.3",
     "@hapi/joi": "^16.1.7",
     "@sendgrid/mail": "^6.3.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "compression": "^1.7.4",
